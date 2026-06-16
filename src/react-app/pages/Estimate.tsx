@@ -37,7 +37,7 @@ const SQUARE_FOOTAGES = ["Under 1,500 sq ft", "1,500–2,500 sq ft", "2,500–4,
 const URGENCIES = ["ASAP (within a week)", "Within 2–4 weeks", "Next month or so", "Just exploring options"];
 
 // CALENDLY LINK — replace with your real link once you create the event type
-const CALENDLY_URL = "https://calendly.com/YOUR_USERNAME/pressure-washing-estimate";
+const CALENDLY_URL = "https://calendly.com/floridacleanestimate/30min;
 
 // InputField outside component — fixes the focus-loss bug
 function InputField({
