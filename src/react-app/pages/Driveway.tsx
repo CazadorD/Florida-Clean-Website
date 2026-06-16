@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/react-app/components/ui/button";
 import Navbar from "@/react-app/components/Navbar";
+import Footer from "@/react-app/components/Footer";
+import { useScrollAnimation } from "@/react-app/lib/useScrollAnimation";
 
 export default function DrivewayPage() {
   const benefits = [
@@ -48,7 +50,7 @@ export default function DrivewayPage() {
     {
       step: "03",
       title: "Surface Detailing",
-      desc: "Edges, cracks, and expansion joints get special attention — we don't skip the details that lesser crews ignore.",
+      desc: "Edges, cracks, and expansion joints get special attention we don't skip the details that lesser crews ignore.",
     },
     {
       step: "04",
@@ -56,6 +58,8 @@ export default function DrivewayPage() {
       desc: "A clean rinse removes all residue. Ask about our optional sealing service to protect your surface for years to come.",
     },
   ];
+
+  useScrollAnimation();
 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
@@ -98,7 +102,7 @@ export default function DrivewayPage() {
             <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-2xl">
               Florida's heat, rain, and humidity turn driveways into stained, slippery hazards.
               Our commercial-grade pressure washing blasts away oil, algae, tire marks, and years
-              of buildup — leaving your concrete looking like the day it was poured.
+              of buildup leaving your concrete looking like the day it was poured.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
@@ -150,7 +154,7 @@ export default function DrivewayPage() {
       {/* Surfaces We Clean */}
       <section className="py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary font-semibold text-sm mb-4">
               <Droplets className="w-4 h-4" />
               Surfaces We Clean
@@ -159,7 +163,7 @@ export default function DrivewayPage() {
               Every Hard Surface, <span className="text-secondary">Handled</span>
             </h2>
             <p className="text-muted-foreground text-lg">
-              We bring the right equipment and technique for every surface type — no one-size-fits-all approach.
+              We bring the right equipment and technique for every surface type no one-size-fits-all approach.
             </p>
           </div>
 
@@ -202,7 +206,7 @@ export default function DrivewayPage() {
                 <span className="text-primary">Curb Appeal</span>
               </h2>
               <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-                Algae and mold on concrete become dangerously slippery when wet — a real liability
+                Algae and mold on concrete become dangerously slippery when wet a real liability
                 in Florida's afternoon storms. Beyond safety, embedded organic growth slowly
                 breaks down concrete and pavers, costing thousands in premature replacement.
               </p>
@@ -223,7 +227,7 @@ export default function DrivewayPage() {
                 { value: "1–3hrs", label: "Average Job Time", color: "from-accent to-pink-500" },
                 { value: "100%", label: "Satisfaction Guaranteed", color: "from-violet-500 to-purple-600" },
               ].map((stat) => (
-                <div key={stat.label} className="bg-white rounded-3xl p-6 shadow-lg border border-border">
+                <div key={stat.label} className="bg-white rounded-3xl p-6 shadow-lg border border-border animate-on-scroll card-lift">
                   <div className={`text-3xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
                     {stat.value}
                   </div>
@@ -238,7 +242,7 @@ export default function DrivewayPage() {
       {/* Process */}
       <section className="py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-4">
               <Zap className="w-4 h-4" />
               Our Process
@@ -250,7 +254,7 @@ export default function DrivewayPage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {process.map((item) => (
-              <div key={item.step} className="bg-white rounded-3xl p-6 shadow-lg border border-border">
+              <div key={item.step} className="bg-white rounded-3xl p-6 shadow-lg border border-border animate-on-scroll card-lift">
                 <div className="text-5xl font-black text-secondary/10 mb-4">{item.step}</div>
                 <h3 className="text-lg font-bold text-foreground mb-3">{item.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
@@ -296,20 +300,7 @@ export default function DrivewayPage() {
         </div>
       </section>
 
-      <footer className="bg-foreground py-10 text-center">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center">
-              <Sun className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-bold text-white">FLORIDA CLEAN</span>
-          </div>
-          <p className="text-white/60 text-sm mb-2">Serving Central Florida with pride since 2018</p>
-          <p className="text-white/40 text-xs">
-            © {new Date().getFullYear()} Florida Clean Pressure Washing Co. All rights reserved. Fully Licensed & Insured.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/react-app/components/ui/button";
 import Navbar from "@/react-app/components/Navbar";
+import Footer from "@/react-app/components/Footer";
+import { useScrollAnimation } from "@/react-app/lib/useScrollAnimation";
 
 export default function RoofCleaningPage() {
   const benefits = [
@@ -51,7 +53,7 @@ export default function RoofCleaningPage() {
   const faqs = [
     {
       q: "Won't pressure washing damage my shingles?",
-      a: "That's exactly why we use soft washing — not high-pressure. Our system uses 1/10th the pressure of a standard power washer combined with professional-grade cleaning solution. This is the method recommended by the Asphalt Roofing Manufacturers Association (ARMA).",
+      a: "That's exactly why we use soft washing not high-pressure. Our system uses 1/10th the pressure of a standard power washer combined with professional-grade cleaning solution. This is the method recommended by the Asphalt Roofing Manufacturers Association (ARMA).",
     },
     {
       q: "How long does roof cleaning take?",
@@ -66,6 +68,8 @@ export default function RoofCleaningPage() {
       a: "Yes. We use biodegradable, eco-friendly solutions and pre-wet all surrounding vegetation before and after the treatment to ensure your landscaping stays healthy.",
     },
   ];
+
+  useScrollAnimation();
 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
@@ -106,7 +110,7 @@ export default function RoofCleaningPage() {
             </h1>
 
             <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-2xl">
-              Those black streaks on your roof aren't just ugly — they're alive. Florida's
+              Those black streaks on your roof aren't just ugly they're alive. Florida's
               humidity creates the perfect breeding ground for algae, moss, and mildew that
               eat away at your shingles. Our professional soft-wash system eliminates them
               safely, without voiding your roof warranty.
@@ -170,10 +174,10 @@ export default function RoofCleaningPage() {
                 Why High-Pressure Washing Damages Florida Roofs
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                Many companies use high-pressure washers on roofs — this blasts away the protective
+                Many companies use high-pressure washers on roofs this blasts away the protective
                 granules from your shingles, accelerates wear, and voids most manufacturer warranties.
                 The Asphalt Roofing Manufacturers Association (ARMA) recommends <strong className="text-foreground">low-pressure
-                soft washing only</strong>. That's exactly what we use — every single time.
+                soft washing only</strong>. That's exactly what we use every single time.
               </p>
             </div>
           </div>
@@ -191,11 +195,11 @@ export default function RoofCleaningPage() {
                 What You Get
               </span>
               <h2 className="text-3xl lg:text-4xl font-black text-foreground mb-6">
-                More Than Just a Clean Roof —{" "}
+                More Than Just a Clean Roof  {" "}
                 <span className="text-primary">Real Protection</span>
               </h2>
               <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-                A professionally cleaned roof isn't cosmetic — it's maintenance. Algae and
+                A professionally cleaned roof isn't cosmetic it's maintenance. Algae and
                 moss retain moisture that accelerates shingle breakdown. Removing them now
                 can add years to your roof's life and keep insurance claims at bay.
               </p>
@@ -217,7 +221,7 @@ export default function RoofCleaningPage() {
                 { value: "2–4hrs", label: "Average Job Time", color: "from-accent to-pink-500" },
                 { value: "500+", label: "Roofs Cleaned in FL", color: "from-violet-500 to-purple-600" },
               ].map((stat) => (
-                <div key={stat.label} className="bg-white rounded-3xl p-6 shadow-lg border border-border">
+                <div key={stat.label} className="bg-white rounded-3xl p-6 shadow-lg border border-border animate-on-scroll card-lift">
                   <div className={`text-3xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
                     {stat.value}
                   </div>
@@ -232,7 +236,7 @@ export default function RoofCleaningPage() {
       {/* Our Process */}
       <section className="py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary font-semibold text-sm mb-4">
               <Zap className="w-4 h-4" />
               Our Process
@@ -241,7 +245,7 @@ export default function RoofCleaningPage() {
               How We Clean Your Roof <span className="text-secondary">The Right Way</span>
             </h2>
             <p className="text-muted-foreground text-lg">
-              Every job follows the same proven 4-step process — no shortcuts, no guesswork.
+              Every job follows the same proven 4-step process no shortcuts, no guesswork.
             </p>
           </div>
 
@@ -272,7 +276,7 @@ export default function RoofCleaningPage() {
 
           <div className="space-y-4">
             {faqs.map((faq) => (
-              <div key={faq.q} className="bg-white rounded-3xl p-6 shadow-lg border border-border">
+              <div key={faq.q} className="bg-white rounded-3xl p-6 shadow-lg border border-border animate-on-scroll card-lift">
                 <h3 className="text-lg font-bold text-foreground mb-3">{faq.q}</h3>
                 <p className="text-muted-foreground leading-relaxed">{faq.a}</p>
               </div>
@@ -298,7 +302,7 @@ export default function RoofCleaningPage() {
           </h2>
           <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
             Get your free, no-obligation roof cleaning quote today. We'll assess your roof
-            and give you transparent pricing — same day.
+            and give you transparent pricing same day.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/estimate">
@@ -318,20 +322,7 @@ export default function RoofCleaningPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-foreground py-10 text-center">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center">
-              <Sun className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-bold text-white">FLORIDA CLEAN</span>
-          </div>
-          <p className="text-white/60 text-sm mb-2">Serving Central Florida with pride since 2018</p>
-          <p className="text-white/40 text-xs">
-            © {new Date().getFullYear()} Florida Clean Pressure Washing Co. All rights reserved. Fully Licensed & Insured.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

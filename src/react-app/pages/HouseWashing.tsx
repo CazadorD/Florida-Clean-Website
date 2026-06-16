@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/react-app/components/ui/button";
 import Navbar from "@/react-app/components/Navbar";
+import Footer from "@/react-app/components/Footer";
+import { useScrollAnimation } from "@/react-app/lib/useScrollAnimation";
 
 export default function HouseWashingPage() {
   const benefits = [
@@ -27,10 +29,10 @@ export default function HouseWashingPage() {
 
   const surfaces = [
     { name: "Vinyl Siding", desc: "Gentle soft-wash removes grime without warping or discoloring" },
-    { name: "Stucco", desc: "Florida's most common exterior — we know exactly how to clean it" },
+    { name: "Stucco", desc: "Florida's most common exterior we know exactly how to clean it" },
     { name: "Brick & Block", desc: "Deep cleaning that brings out the natural beauty of masonry" },
     { name: "Wood Siding", desc: "Low-pressure approach that preserves paint and wood integrity" },
-    { name: "Soffits & Fascia", desc: "Often overlooked — a breeding ground for mold and wasp nests" },
+    { name: "Soffits & Fascia", desc: "Often overlooked a breeding ground for mold and wasp nests" },
     { name: "Gutters (Exterior)", desc: "Removes the dark tiger-stripe staining on gutter faces" },
   ];
 
@@ -43,7 +45,7 @@ export default function HouseWashingPage() {
     {
       icon: Zap,
       title: "Kills at the Root",
-      desc: "Our biodegradable solution doesn't just clean the surface — it kills mold and algae spores so results last 2–3x longer than pressure alone.",
+      desc: "Our biodegradable solution doesn't just clean the surface it kills mold and algae spores so results last 2–3x longer than pressure alone.",
     },
     {
       icon: Sparkles,
@@ -51,6 +53,8 @@ export default function HouseWashingPage() {
       desc: "High pressure strips paint. Our low-pressure method refreshes painted surfaces without lifting a single flake.",
     },
   ];
+
+  useScrollAnimation();
 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
@@ -93,7 +97,7 @@ export default function HouseWashingPage() {
             <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-2xl">
               Florida's humidity, rain, and heat create the perfect conditions for mold, mildew,
               and algae to take over your home's exterior. Our professional soft-wash house washing
-              service restores your home's appearance safely — without risking damage to siding,
+              service restores your home's appearance safely without risking damage to siding,
               paint, or landscaping.
             </p>
 
@@ -146,7 +150,7 @@ export default function HouseWashingPage() {
       {/* Why Soft Wash for Houses */}
       <section className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent font-semibold text-sm mb-4">
               <Home className="w-4 h-4" />
               The Right Method Matters
@@ -219,7 +223,7 @@ export default function HouseWashingPage() {
               </h2>
               <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
                 Your home's exterior is constantly under attack from Florida's climate.
-                Regular professional cleaning isn't a luxury — it's maintenance that saves
+                Regular professional cleaning isn't a luxury it's maintenance that saves
                 thousands in premature paint jobs and siding replacement.
               </p>
               <div className="space-y-4">
@@ -285,20 +289,7 @@ export default function HouseWashingPage() {
         </div>
       </section>
 
-      <footer className="bg-foreground py-10 text-center">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center">
-              <Sun className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-bold text-white">FLORIDA CLEAN</span>
-          </div>
-          <p className="text-white/60 text-sm mb-2">Serving Central Florida with pride since 2018</p>
-          <p className="text-white/40 text-xs">
-            © {new Date().getFullYear()} Florida Clean Pressure Washing Co. All rights reserved. Fully Licensed & Insured.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

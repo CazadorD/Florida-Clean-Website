@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 @layer base {
   :root {
     --background: 45 30% 97%;
@@ -82,11 +84,201 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: "Inter Variable", "Inter", system-ui, sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
   }
 
   button:not([disabled]),
   [role="button"]:not([disabled]) {
     cursor: pointer;
+  }
+}
+
+/* =====================
+   SCROLL ANIMATIONS
+   ===================== */
+
+/* Elements start invisible and animate in when they enter viewport */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children */
+.animate-on-scroll:nth-child(1) { transition-delay: 0ms; }
+.animate-on-scroll:nth-child(2) { transition-delay: 80ms; }
+.animate-on-scroll:nth-child(3) { transition-delay: 160ms; }
+.animate-on-scroll:nth-child(4) { transition-delay: 240ms; }
+.animate-on-scroll:nth-child(5) { transition-delay: 320ms; }
+.animate-on-scroll:nth-child(6) { transition-delay: 400ms; }
+
+/* Fade in from left */
+.animate-slide-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.animate-slide-left.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Fade in from right */
+.animate-slide-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.animate-slide-right.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Scale in */
+.animate-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.animate-scale.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* =====================
+   FLOAT ANIMATION (hero decorations)
+   ===================== */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(20, 184, 166, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(20, 184, 166, 0.6); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 2s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+/* =====================
+   GRADIENT TEXT ANIMATION
+   ===================== */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease infinite;
+}
+
+/* =====================
+   CARD HOVER EFFECTS
+   ===================== */
+.card-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* =====================
+   BUTTON PULSE
+   ===================== */
+@keyframes btn-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.5); }
+  70% { box-shadow: 0 0 0 12px rgba(249, 115, 22, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); }
+}
+
+.btn-pulse {
+  animation: btn-pulse 2.5s ease-in-out infinite;
+}
+
+/* =====================
+   COUNTER ANIMATION
+   ===================== */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =====================
+   WAVE ANIMATION
+   ===================== */
+@keyframes wave-move {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-25px); }
+  100% { transform: translateX(0); }
+}
+
+.animate-wave {
+  animation: wave-move 8s ease-in-out infinite;
+}
+
+/* =====================
+   MOBILE IMPROVEMENTS
+   ===================== */
+@media (max-width: 640px) {
+  h1 { font-size: 2.25rem !important; line-height: 1.15 !important; }
+  h2 { font-size: 1.75rem !important; }
+  .hero-cta-stack { flex-direction: column !important; }
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better tap targets on mobile */
+@media (max-width: 768px) {
+  button, a {
+    min-height: 44px;
   }
 }

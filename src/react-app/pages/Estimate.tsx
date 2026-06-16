@@ -3,7 +3,6 @@ import { Link } from "react-router";
 import {
   ArrowRight,
   Phone,
-  Sun,
   Palmtree,
   Shield,
   Clock,
@@ -21,6 +20,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/react-app/components/ui/button";
 import Navbar from "@/react-app/components/Navbar";
+import Footer from "@/react-app/components/Footer";
+import { useScrollAnimation } from "@/react-app/lib/useScrollAnimation";
 
 type FormData = {
   firstName: string;
@@ -144,7 +145,7 @@ export default function EstimatePage() {
             </h1>
             <p className="text-muted-foreground text-lg mb-2 leading-relaxed">
               Thanks, <strong className="text-foreground">{form.firstName}</strong>! We've got your estimate request
-              and will be in touch within <strong className="text-foreground">24 hours</strong> — usually much sooner.
+              and will be in touch within <strong className="text-foreground">24 hours</strong> usually much sooner.
             </p>
             <p className="text-muted-foreground mb-8">
               Check your email at <strong className="text-foreground">{form.email}</strong> for a confirmation.
@@ -168,6 +169,8 @@ export default function EstimatePage() {
     );
   }
 
+  useScrollAnimation();
+
   return (
     <div className="min-h-screen bg-background overflow-hidden">
       <Navbar />
@@ -189,7 +192,7 @@ export default function EstimatePage() {
               ))}
             </span>
             <span className="text-sm font-semibold text-foreground">
-              Free, No-Obligation Quote — 24hr Response
+              Free, No-Obligation Quote 24hr Response
             </span>
           </div>
 
@@ -200,7 +203,7 @@ export default function EstimatePage() {
             </span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            Fill out the form below and we'll assess your property and get you a transparent, no-surprise quote — fast.
+            Fill out the form below and we'll assess your property and get you a transparent, no-surprise quote fast.
           </p>
         </div>
       </section>
@@ -444,7 +447,7 @@ export default function EstimatePage() {
                 </div>
                 <p className="text-foreground text-sm leading-relaxed mb-4 italic">
                   "Florida Clean did our roof and driveway in one day. The black streaks that had been there for years
-                  are completely gone. Highly recommend — fast, professional, and priced fairly."
+                  are completely gone. Highly recommend fast, professional, and priced fairly."
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center text-white text-sm font-bold">
@@ -495,20 +498,7 @@ export default function EstimatePage() {
         </div>
       </section>
 
-      <footer className="bg-foreground py-10 text-center">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center">
-              <Sun className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-bold text-white">FLORIDA CLEAN</span>
-          </div>
-          <p className="text-white/60 text-sm mb-2">Serving Central Florida with pride since 2018</p>
-          <p className="text-white/40 text-xs">
-            © {new Date().getFullYear()} Florida Clean Pressure Washing Co. All rights reserved. Fully Licensed & Insured.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -15,10 +15,12 @@ import {
 } from "lucide-react";
 import { Button } from "@/react-app/components/ui/button";
 import Navbar from "@/react-app/components/Navbar";
+import Footer from "@/react-app/components/Footer";
+import { useScrollAnimation } from "@/react-app/lib/useScrollAnimation";
 
 export default function CommercialPage() {
   const industries = [
-    { name: "Retail Storefronts", desc: "First impressions close sales — keep your entrance immaculate" },
+    { name: "Retail Storefronts", desc: "First impressions close sales keep your entrance immaculate" },
     { name: "Office Buildings", desc: "Maintain a professional appearance for clients and employees" },
     { name: "Restaurants & Food Service", desc: "Health code compliance and grease removal from drive-thrus and entries" },
     { name: "Apartment Complexes", desc: "Common areas, breezeways, parking structures, and pool decks" },
@@ -31,7 +33,7 @@ export default function CommercialPage() {
     "Prevents slip-and-fall liability from mold and algae on walkways",
     "Satisfies local health and safety codes for food service businesses",
     "Protects commercial property value and reduces maintenance costs",
-    "Flexible scheduling — nights, weekends, and off-hours available",
+    "Flexible scheduling nights, weekends, and off-hours available",
     "Volume pricing for multi-location and contract accounts",
   ];
 
@@ -39,7 +41,7 @@ export default function CommercialPage() {
     {
       icon: Clock,
       title: "Minimal Business Disruption",
-      desc: "We work around your hours. Early morning, late evening, weekends — we schedule around your operation, not ours.",
+      desc: "We work around your hours. Early morning, late evening, weekends we schedule around your operation, not ours.",
     },
     {
       icon: Shield,
@@ -54,9 +56,11 @@ export default function CommercialPage() {
     {
       icon: Users,
       title: "Dedicated Account Manager",
-      desc: "One point of contact for all your locations. No phone trees, no repeating yourself — just results.",
+      desc: "One point of contact for all your locations. No phone trees, no repeating yourself just results.",
     },
   ];
+
+  useScrollAnimation();
 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
@@ -98,7 +102,7 @@ export default function CommercialPage() {
 
             <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-2xl">
               Your business's exterior is your first impression. In Central Florida's humid climate,
-              mold, algae, and grime accumulate fast — sending the wrong message to customers before
+              mold, algae, and grime accumulate fast sending the wrong message to customers before
               they ever walk through the door. Our commercial pressure washing keeps your property
               clean, safe, and professional year-round.
             </p>
@@ -152,7 +156,7 @@ export default function CommercialPage() {
       {/* Industries */}
       <section className="py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-100 text-violet-600 font-semibold text-sm mb-4">
               <Building2 className="w-4 h-4" />
               Industries We Serve
@@ -161,7 +165,7 @@ export default function CommercialPage() {
               We Work With All Types of <span className="text-violet-500">Commercial Properties</span>
             </h2>
             <p className="text-muted-foreground text-lg">
-              From single storefronts to large apartment complexes — we have the equipment and experience for any commercial job.
+              From single storefronts to large apartment complexes we have the equipment and experience for any commercial job.
             </p>
           </div>
 
@@ -193,7 +197,7 @@ export default function CommercialPage() {
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-violet-50 via-background to-primary/5" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-4">
               <Sun className="w-4 h-4" />
               Built for Business
@@ -221,7 +225,7 @@ export default function CommercialPage() {
           </div>
 
           {/* Benefits */}
-          <div className="bg-white rounded-3xl p-8 shadow-lg border border-border">
+          <div className="bg-white rounded-3xl p-8 shadow-lg border border-border animate-on-scroll card-lift">
             <h3 className="text-2xl font-black text-foreground mb-6 text-center">
               Everything Your Property Needs
             </h3>
@@ -275,7 +279,7 @@ export default function CommercialPage() {
           </h2>
           <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
             Get a free commercial assessment and quote. We'll walk your property, identify
-            every surface that needs attention, and deliver a clear proposal — fast.
+            every surface that needs attention, and deliver a clear proposal fast.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/estimate">
@@ -294,20 +298,7 @@ export default function CommercialPage() {
         </div>
       </section>
 
-      <footer className="bg-foreground py-10 text-center">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center">
-              <Sun className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-bold text-white">FLORIDA CLEAN</span>
-          </div>
-          <p className="text-white/60 text-sm mb-2">Serving Central Florida with pride since 2018</p>
-          <p className="text-white/40 text-xs">
-            © {new Date().getFullYear()} Florida Clean Pressure Washing Co. All rights reserved. Fully Licensed & Insured.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
