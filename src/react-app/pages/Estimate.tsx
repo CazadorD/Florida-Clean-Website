@@ -1,22 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import {
-  ArrowRight,
-  Phone,
-  Palmtree,
-  Shield,
-  Clock,
-  CheckCircle2,
-  Star,
-  Home,
-  Truck,
-  Sparkles,
-  Building2,
-  MapPin,
-  User,
-  Mail,
-  MessageSquare,
-  Send,
+  ArrowRight, Phone, Palmtree, Shield, Clock,
+  CheckCircle2, Star, Home, Truck, Sparkles,
+  Building2, MapPin, User, Mail, MessageSquare, Send,
+  Calendar,
 } from "lucide-react";
 import { Button } from "@/react-app/components/ui/button";
 import Navbar from "@/react-app/components/Navbar";
@@ -48,22 +36,128 @@ const PROPERTY_TYPES = ["Single Family Home", "Townhome / Condo", "Multi-Family 
 const SQUARE_FOOTAGES = ["Under 1,500 sq ft", "1,500–2,500 sq ft", "2,500–4,000 sq ft", "4,000–6,000 sq ft", "6,000+ sq ft"];
 const URGENCIES = ["ASAP (within a week)", "Within 2–4 weeks", "Next month or so", "Just exploring options"];
 
+// CALENDLY LINK — replace with your real link once you create the event type
+const CALENDLY_URL = "https://calendly.com/YOUR_USERNAME/pressure-washing-estimate";
+
+// InputField outside component — fixes the focus-loss bug
+function InputField({
+  label, field, type = "text", placeholder, icon: Icon, value, error, onChange,
+}: {
+  label: string;
+  field: keyof FormData;
+  type?: string;
+  placeholder: string;
+  icon: React.ElementType;
+  value: string;
+  error?: string;
+  onChange: (field: keyof FormData, value: string) => void;
+}) {
+  return (
+    <div>
+      <label className="block text-sm font-semibold text-foreground mb-2">{label}</label>
+      <div className="relative">
+        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none">
+          <Icon className="w-4 h-4" />
+        </div>
+        <input
+          type={type}
+          value={value}
+          onChange={(e) => onChange(field, e.target.value)}
+          placeholder={placeholder}
+          className={`w-full pl-11 pr-4 py-3 rounded-2xl border-2 bg-white text-foreground placeholder:text-muted-foreground transition-colors outline-none focus:border-primary text-sm ${
+            error ? "border-red-400" : "border-border"
+          }`}
+        />
+      </div>
+      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+    </div>
+  );
+}
+
+// Success screen — separate component, no hooks issues
+function SuccessScreen({ firstName, email }: { firstName: string; email: string }) {
+  return (
+    <div className="min-h-screen bg-background overflow-hidden">
+      <Navbar />
+      <div className="min-h-screen flex items-center justify-center pt-20 px-4">
+        <div className="max-w-lg w-full text-center">
+          {/* Checkmark */}
+          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-primary/30">
+            <CheckCircle2 className="w-12 h-12 text-white" />
+          </div>
+
+          <h1 className="text-3xl font-black text-foreground mb-3">
+            ¡Solicitud Recibida! 🎉
+          </h1>
+          <p className="text-muted-foreground text-lg mb-2 leading-relaxed">
+            Gracias, <strong className="text-foreground">{firstName}</strong>. Hemos recibido tu solicitud y nos pondremos en contacto dentro de <strong className="text-foreground">24 horas</strong>, generalmente mucho antes.
+          </p>
+          <p className="text-muted-foreground text-sm mb-8">
+            Una confirmación será enviada a <strong className="text-foreground">{email}</strong>.
+          </p>
+
+          {/* Calendly CTA */}
+          <div className="bg-gradient-to-br from-primary/5 to-teal-50 border border-primary/20 rounded-3xl p-6 mb-6">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center mx-auto mb-4">
+              <Calendar className="w-6 h-6 text-white" />
+            </div>
+            <h2 className="text-lg font-black text-foreground mb-2">
+              ¿Quieres agendar tu cita ahora?
+            </h2>
+            <p className="text-muted-foreground text-sm mb-4">
+              Selecciona un horario conveniente y te llamamos para confirmar todos los detalles y darte tu precio exacto.
+            </p>
+            <a
+              href={CALENDLY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button
+                size="lg"
+                className="w-full bg-gradient-to-r from-secondary to-orange-500 hover:from-secondary/90 hover:to-orange-500/90 text-white font-bold rounded-full shadow-lg shadow-secondary/30"
+              >
+                <Calendar className="mr-2 w-5 h-5" />
+                Agendar Mi Cita en Calendly
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </a>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link to="/">
+              <Button variant="outline" className="border-2 border-primary text-primary font-bold px-8 rounded-full">
+                Volver al Inicio
+              </Button>
+            </Link>
+            <a href="tel:+15551234567">
+              <Button variant="outline" className="border-2 border-border text-foreground font-bold px-8 rounded-full">
+                <Phone className="mr-2 w-4 h-4" />
+                Llamar Ahora
+              </Button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+}
+
 export default function EstimatePage() {
+  useScrollAnimation();
+
   const [form, setForm] = useState<FormData>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    address: "",
-    city: "",
-    services: [],
-    propertyType: "",
-    squareFootage: "",
-    urgency: "",
-    message: "",
+    firstName: "", lastName: "", email: "", phone: "",
+    address: "", city: "", services: [],
+    propertyType: "", squareFootage: "", urgency: "", message: "",
   });
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+
+  const handleChange = (field: keyof FormData, value: string) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) setErrors((e) => ({ ...e, [field]: undefined }));
+  };
 
   const toggleService = (id: string) => {
     setForm((prev) => ({
@@ -92,84 +186,15 @@ export default function EstimatePage() {
 
   const handleSubmit = () => {
     if (!validate()) return;
+    // Scroll to top so success message is visible
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setSubmitted(true);
   };
 
-  const InputField = ({
-    label,
-    field,
-    type = "text",
-    placeholder,
-    icon: Icon,
-  }: {
-    label: string;
-    field: keyof FormData;
-    type?: string;
-    placeholder: string;
-    icon: React.ElementType;
-  }) => (
-    <div>
-      <label className="block text-sm font-semibold text-foreground mb-2">{label}</label>
-      <div className="relative">
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
-          <Icon className="w-4 h-4" />
-        </div>
-        <input
-          type={type}
-          value={form[field] as string}
-          onChange={(e) => {
-            setForm((prev) => ({ ...prev, [field]: e.target.value }));
-            if (errors[field]) setErrors((er) => ({ ...er, [field]: undefined }));
-          }}
-          placeholder={placeholder}
-          className={`w-full pl-11 pr-4 py-3 rounded-2xl border-2 bg-white text-foreground placeholder:text-muted-foreground transition-colors outline-none focus:border-primary text-sm ${
-            errors[field] ? "border-red-400" : "border-border"
-          }`}
-        />
-      </div>
-      {errors[field] && <p className="text-red-500 text-xs mt-1">{errors[field]}</p>}
-    </div>
-  );
-
+  // Show success screen inline — no routing, stays on same page
   if (submitted) {
-    return (
-      <div className="min-h-screen bg-background overflow-hidden">
-        <Navbar />
-        <div className="min-h-screen flex items-center justify-center pt-20 px-4">
-          <div className="max-w-lg w-full text-center">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-primary/30">
-              <CheckCircle2 className="w-12 h-12 text-white" />
-            </div>
-            <h1 className="text-3xl font-black text-foreground mb-4">
-              Request Received! 🎉
-            </h1>
-            <p className="text-muted-foreground text-lg mb-2 leading-relaxed">
-              Thanks, <strong className="text-foreground">{form.firstName}</strong>! We've got your estimate request
-              and will be in touch within <strong className="text-foreground">24 hours</strong> usually much sooner.
-            </p>
-            <p className="text-muted-foreground mb-8">
-              Check your email at <strong className="text-foreground">{form.email}</strong> for a confirmation.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/">
-                <Button className="bg-gradient-to-r from-primary to-teal-500 text-white font-bold px-8 rounded-full">
-                  Back to Home
-                </Button>
-              </Link>
-              <a href="tel:+15551234567">
-                <Button variant="outline" className="border-2 border-primary text-primary font-bold px-8 rounded-full">
-                  <Phone className="mr-2 w-4 h-4" />
-                  Call Now
-                </Button>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    return <SuccessScreen firstName={form.firstName} email={form.email} />;
   }
-
-  useScrollAnimation();
 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
@@ -178,62 +203,62 @@ export default function EstimatePage() {
       {/* Hero */}
       <section className="relative pt-32 pb-16">
         <div className="absolute inset-0 bg-gradient-to-b from-sky-100 via-cyan-50 to-background" />
-        <div className="absolute top-24 right-[15%] w-32 h-32 bg-gradient-to-br from-yellow-300 to-secondary rounded-full blur-sm opacity-70" />
-        <div className="absolute top-28 right-[16%] w-24 h-24 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-full" />
-        <div className="absolute bottom-0 left-10 text-primary/20">
+        <div className="absolute top-24 right-[15%] w-32 h-32 bg-gradient-to-br from-yellow-300 to-secondary rounded-full blur-sm opacity-70 animate-float-slow" />
+        <div className="absolute top-28 right-[16%] w-24 h-24 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-full animate-float" />
+        <div className="absolute bottom-0 left-10 text-primary/20 animate-float-slow">
           <Palmtree className="w-20 h-20" strokeWidth={1} />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-md border border-primary/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-md border border-primary/20 mb-6 animate-pulse-glow">
             <span className="flex gap-0.5">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
               ))}
             </span>
             <span className="text-sm font-semibold text-foreground">
-              Free, No-Obligation Quote 24hr Response
+              Free, No-Obligation Quote · 24hr Response
             </span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl font-black text-foreground leading-[1.1] mb-4">
             Get Your Free
-            <span className="block bg-gradient-to-r from-primary via-teal-500 to-cyan-500 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-primary via-teal-500 to-cyan-500 bg-clip-text text-transparent animate-gradient">
               Estimate Today
             </span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            Fill out the form below and we'll assess your property and get you a transparent, no-surprise quote fast.
+            Fill out the form below and we'll get you a transparent, no-surprise quote fast.
           </p>
         </div>
       </section>
 
-      {/* Form + Trust Sidebar */}
+      {/* Form + Sidebar */}
       <section className="py-12 pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-3 gap-10 items-start">
 
             {/* FORM */}
-            <div className="lg:col-span-2 bg-white rounded-3xl shadow-xl border border-border p-8">
+            <div className="lg:col-span-2 bg-white rounded-3xl shadow-xl border border-border p-8 animate-on-scroll">
               <h2 className="text-2xl font-black text-foreground mb-8">Tell Us About Your Property</h2>
 
-              {/* Step 1: Contact */}
+              {/* Step 1 */}
               <div className="mb-8">
                 <div className="flex items-center gap-3 mb-5">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center text-white text-sm font-bold">1</div>
                   <h3 className="font-bold text-foreground text-lg">Your Contact Info</h3>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
-                  <InputField label="First Name" field="firstName" placeholder="John" icon={User} />
-                  <InputField label="Last Name" field="lastName" placeholder="Smith" icon={User} />
-                  <InputField label="Email Address" field="email" type="email" placeholder="john@email.com" icon={Mail} />
-                  <InputField label="Phone Number" field="phone" type="tel" placeholder="(555) 123-4567" icon={Phone} />
+                  <InputField label="First Name" field="firstName" placeholder="John" icon={User} value={form.firstName} error={errors.firstName} onChange={handleChange} />
+                  <InputField label="Last Name" field="lastName" placeholder="Smith" icon={User} value={form.lastName} error={errors.lastName} onChange={handleChange} />
+                  <InputField label="Email Address" field="email" type="email" placeholder="john@email.com" icon={Mail} value={form.email} error={errors.email} onChange={handleChange} />
+                  <InputField label="Phone Number" field="phone" type="tel" placeholder="(555) 123-4567" icon={Phone} value={form.phone} error={errors.phone} onChange={handleChange} />
                 </div>
               </div>
 
               <div className="border-t border-border mb-8" />
 
-              {/* Step 2: Property Location */}
+              {/* Step 2 */}
               <div className="mb-8">
                 <div className="flex items-center gap-3 mb-5">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-secondary to-orange-500 flex items-center justify-center text-white text-sm font-bold">2</div>
@@ -241,26 +266,24 @@ export default function EstimatePage() {
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="sm:col-span-2">
-                    <InputField label="Street Address" field="address" placeholder="123 Palm Tree Lane" icon={MapPin} />
+                    <InputField label="Street Address" field="address" placeholder="123 Palm Tree Lane" icon={MapPin} value={form.address} error={errors.address} onChange={handleChange} />
                   </div>
-                  <InputField label="City" field="city" placeholder="Orlando" icon={MapPin} />
+                  <InputField label="City" field="city" placeholder="Orlando" icon={MapPin} value={form.city} error={errors.city} onChange={handleChange} />
                   <div>
                     <label className="block text-sm font-semibold text-foreground mb-2">State</label>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        value="Florida"
-                        readOnly
-                        className="w-full px-4 py-3 rounded-2xl border-2 border-border bg-muted text-muted-foreground text-sm cursor-not-allowed"
-                      />
-                    </div>
+                    <input
+                      type="text"
+                      value="Florida"
+                      readOnly
+                      className="w-full px-4 py-3 rounded-2xl border-2 border-border bg-muted text-muted-foreground text-sm cursor-not-allowed"
+                    />
                   </div>
                 </div>
               </div>
 
               <div className="border-t border-border mb-8" />
 
-              {/* Step 3: Services */}
+              {/* Step 3 */}
               <div className="mb-8">
                 <div className="flex items-center gap-3 mb-5">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-accent to-pink-500 flex items-center justify-center text-white text-sm font-bold">3</div>
@@ -273,11 +296,10 @@ export default function EstimatePage() {
                     return (
                       <button
                         key={service.id}
+                        type="button"
                         onClick={() => toggleService(service.id)}
                         className={`flex items-center gap-4 p-4 rounded-2xl border-2 transition-all text-left ${
-                          selected
-                            ? "border-primary bg-primary/5"
-                            : "border-border bg-white hover:border-primary/40"
+                          selected ? "border-primary bg-primary/5" : "border-border bg-white hover:border-primary/40"
                         }`}
                       >
                         <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${service.color} flex items-center justify-center flex-shrink-0`}>
@@ -286,9 +308,7 @@ export default function EstimatePage() {
                         <span className={`font-semibold text-sm ${selected ? "text-primary" : "text-foreground"}`}>
                           {service.label}
                         </span>
-                        {selected && (
-                          <CheckCircle2 className="w-5 h-5 text-primary ml-auto flex-shrink-0" />
-                        )}
+                        {selected && <CheckCircle2 className="w-5 h-5 text-primary ml-auto flex-shrink-0" />}
                       </button>
                     );
                   })}
@@ -298,54 +318,39 @@ export default function EstimatePage() {
 
               <div className="border-t border-border mb-8" />
 
-              {/* Step 4: Property Details */}
+              {/* Step 4 */}
               <div className="mb-8">
                 <div className="flex items-center gap-3 mb-5">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white text-sm font-bold">4</div>
                   <h3 className="font-bold text-foreground text-lg">Property Details</h3>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-6">
-                  {/* Property Type */}
                   <div>
                     <label className="block text-sm font-semibold text-foreground mb-3">Property Type</label>
                     <div className="space-y-2">
                       {PROPERTY_TYPES.map((type) => (
-                        <button
-                          key={type}
-                          onClick={() => {
-                            setForm((p) => ({ ...p, propertyType: type }));
-                            setErrors((e) => ({ ...e, propertyType: undefined }));
-                          }}
+                        <button key={type} type="button"
+                          onClick={() => { setForm((p) => ({ ...p, propertyType: type })); setErrors((e) => ({ ...e, propertyType: undefined })); }}
                           className={`w-full text-left px-4 py-3 rounded-xl border-2 text-sm font-medium transition-all ${
-                            form.propertyType === type
-                              ? "border-primary bg-primary/5 text-primary"
-                              : "border-border text-foreground hover:border-primary/40"
+                            form.propertyType === type ? "border-primary bg-primary/5 text-primary" : "border-border text-foreground hover:border-primary/40"
                           }`}
-                        >
-                          {type}
-                        </button>
+                        >{type}</button>
                       ))}
                     </div>
                     {errors.propertyType && <p className="text-red-500 text-xs mt-1">{errors.propertyType}</p>}
                   </div>
 
-                  {/* Square Footage + Urgency */}
                   <div className="space-y-6">
                     <div>
                       <label className="block text-sm font-semibold text-foreground mb-3">Approximate Square Footage</label>
                       <div className="space-y-2">
                         {SQUARE_FOOTAGES.map((size) => (
-                          <button
-                            key={size}
+                          <button key={size} type="button"
                             onClick={() => setForm((p) => ({ ...p, squareFootage: size }))}
                             className={`w-full text-left px-4 py-3 rounded-xl border-2 text-sm font-medium transition-all ${
-                              form.squareFootage === size
-                                ? "border-secondary bg-secondary/5 text-secondary"
-                                : "border-border text-foreground hover:border-secondary/40"
+                              form.squareFootage === size ? "border-secondary bg-secondary/5 text-secondary" : "border-border text-foreground hover:border-secondary/40"
                             }`}
-                          >
-                            {size}
-                          </button>
+                          >{size}</button>
                         ))}
                       </div>
                     </div>
@@ -354,20 +359,12 @@ export default function EstimatePage() {
                       <label className="block text-sm font-semibold text-foreground mb-3">How Soon Do You Need This?</label>
                       <div className="space-y-2">
                         {URGENCIES.map((urgency) => (
-                          <button
-                            key={urgency}
-                            onClick={() => {
-                              setForm((p) => ({ ...p, urgency }));
-                              setErrors((e) => ({ ...e, urgency: undefined }));
-                            }}
+                          <button key={urgency} type="button"
+                            onClick={() => { setForm((p) => ({ ...p, urgency })); setErrors((e) => ({ ...e, urgency: undefined })); }}
                             className={`w-full text-left px-4 py-3 rounded-xl border-2 text-sm font-medium transition-all ${
-                              form.urgency === urgency
-                                ? "border-accent bg-accent/5 text-accent"
-                                : "border-border text-foreground hover:border-accent/40"
+                              form.urgency === urgency ? "border-accent bg-accent/5 text-accent" : "border-border text-foreground hover:border-accent/40"
                             }`}
-                          >
-                            {urgency}
-                          </button>
+                          >{urgency}</button>
                         ))}
                       </div>
                       {errors.urgency && <p className="text-red-500 text-xs mt-1">{errors.urgency}</p>}
@@ -378,14 +375,16 @@ export default function EstimatePage() {
 
               <div className="border-t border-border mb-8" />
 
-              {/* Step 5: Message */}
+              {/* Step 5 */}
               <div className="mb-8">
                 <div className="flex items-center gap-3 mb-5">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-cyan-500 flex items-center justify-center text-white text-sm font-bold">5</div>
-                  <h3 className="font-bold text-foreground text-lg">Anything Else? <span className="text-muted-foreground font-normal text-sm">(Optional)</span></h3>
+                  <h3 className="font-bold text-foreground text-lg">
+                    Anything Else? <span className="text-muted-foreground font-normal text-sm">(Optional)</span>
+                  </h3>
                 </div>
                 <div className="relative">
-                  <div className="absolute left-4 top-4 text-muted-foreground">
+                  <div className="absolute left-4 top-4 text-muted-foreground pointer-events-none">
                     <MessageSquare className="w-4 h-4" />
                   </div>
                   <textarea
@@ -398,11 +397,10 @@ export default function EstimatePage() {
                 </div>
               </div>
 
-              {/* Submit */}
               <Button
                 onClick={handleSubmit}
                 size="lg"
-                className="w-full bg-gradient-to-r from-secondary to-orange-500 hover:from-secondary/90 hover:to-orange-500/90 text-white font-bold text-lg py-6 rounded-2xl shadow-xl shadow-secondary/30"
+                className="w-full bg-gradient-to-r from-secondary to-orange-500 hover:from-secondary/90 hover:to-orange-500/90 text-white font-bold text-lg py-6 rounded-2xl shadow-xl shadow-secondary/30 btn-pulse"
               >
                 Send My Free Estimate Request
                 <Send className="ml-2 w-5 h-5" />
@@ -413,10 +411,9 @@ export default function EstimatePage() {
               </p>
             </div>
 
-            {/* TRUST SIDEBAR */}
+            {/* SIDEBAR */}
             <div className="space-y-6">
-              {/* Why Us */}
-              <div className="bg-white rounded-3xl p-6 shadow-lg border border-border">
+              <div className="bg-white rounded-3xl p-6 shadow-lg border border-border animate-on-scroll">
                 <h3 className="font-black text-foreground text-lg mb-5">Why Choose Florida Clean?</h3>
                 <div className="space-y-4">
                   {[
@@ -438,21 +435,17 @@ export default function EstimatePage() {
                 </div>
               </div>
 
-              {/* Testimonial */}
-              <div className="bg-gradient-to-br from-primary/5 to-teal-50 rounded-3xl p-6 border border-primary/20">
+              <div className="bg-gradient-to-br from-primary/5 to-teal-50 rounded-3xl p-6 border border-primary/20 animate-on-scroll">
                 <div className="flex gap-0.5 mb-3">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                   ))}
                 </div>
                 <p className="text-foreground text-sm leading-relaxed mb-4 italic">
-                  "Florida Clean did our roof and driveway in one day. The black streaks that had been there for years
-                  are completely gone. Highly recommend fast, professional, and priced fairly."
+                  "Florida Clean did our roof and driveway in one day. The black streaks that had been there for years are completely gone. Fast, professional, and priced fairly."
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center text-white text-sm font-bold">
-                    M
-                  </div>
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center text-white text-sm font-bold">M</div>
                   <div>
                     <p className="font-semibold text-foreground text-sm">Maria T.</p>
                     <p className="text-muted-foreground text-xs">Orlando, FL</p>
@@ -460,8 +453,7 @@ export default function EstimatePage() {
                 </div>
               </div>
 
-              {/* Call Instead */}
-              <div className="bg-white rounded-3xl p-6 shadow-lg border border-border text-center">
+              <div className="bg-white rounded-3xl p-6 shadow-lg border border-border text-center animate-on-scroll">
                 <p className="text-sm text-muted-foreground mb-3">Prefer to talk first?</p>
                 <a href="tel:+15551234567">
                   <Button className="w-full bg-gradient-to-r from-primary to-teal-500 text-white font-bold rounded-2xl">
@@ -472,8 +464,7 @@ export default function EstimatePage() {
                 <p className="text-xs text-muted-foreground mt-3">Mon–Sat, 7am–7pm</p>
               </div>
 
-              {/* Services quick links */}
-              <div className="bg-white rounded-3xl p-6 shadow-lg border border-border">
+              <div className="bg-white rounded-3xl p-6 shadow-lg border border-border animate-on-scroll">
                 <p className="text-sm font-semibold text-foreground mb-4">Explore Our Services</p>
                 <div className="space-y-2">
                   {[
@@ -482,11 +473,7 @@ export default function EstimatePage() {
                     { label: "House Washing", href: "/services/house-washing" },
                     { label: "Commercial", href: "/services/commercial" },
                   ].map((link) => (
-                    <Link
-                      key={link.label}
-                      to={link.href}
-                      className="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-muted transition-colors text-sm text-foreground font-medium"
-                    >
+                    <Link key={link.label} to={link.href} className="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-muted transition-colors text-sm text-foreground font-medium">
                       {link.label}
                       <ArrowRight className="w-4 h-4 text-muted-foreground" />
                     </Link>

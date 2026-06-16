@@ -63,20 +63,20 @@ export default function HouseWashingPage() {
       {/* Hero */}
       <section className="relative min-h-[70vh] flex items-center pt-20">
         <div className="absolute inset-0 bg-gradient-to-b from-sky-100 via-cyan-50 to-background" />
-        <div className="absolute top-32 right-[15%] w-40 h-40 bg-gradient-to-br from-yellow-300 to-secondary rounded-full blur-sm opacity-80" />
-        <div className="absolute top-36 right-[16%] w-32 h-32 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-full" />
+        <div className="absolute top-32 right-[15%] w-40 h-40 bg-gradient-to-br from-yellow-300 to-secondary rounded-full blur-sm opacity-80 animate-float-slow" />
+        <div className="absolute top-36 right-[16%] w-32 h-32 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-full animate-float" />
         <div className="absolute bottom-0 left-0 right-0">
           <svg viewBox="0 0 1440 120" className="w-full h-auto fill-background">
             <path d="M0,64L48,58.7C96,53,192,43,288,48C384,53,480,75,576,85.3C672,96,768,96,864,80C960,64,1056,32,1152,26.7C1248,21,1344,43,1392,53.3L1440,64L1440,120L0,120Z" />
           </svg>
         </div>
         <div className="absolute bottom-16 left-10 text-primary/20">
-          <Palmtree className="w-28 h-28" strokeWidth={1} />
+          <Palmtree className="w-28 h-28 animate-float-slow" strokeWidth={1} />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-md border border-accent/20 mb-6">
+          <div className="max-w-3xl animate-slide-left">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-md border border-accent/20 mb-6 animate-pulse-glow">
               <span className="flex gap-0.5">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
