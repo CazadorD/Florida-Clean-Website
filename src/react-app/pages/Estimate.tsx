@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useForm } from "@formspree/react";
 import { Link } from "react-router";
 import {
   ArrowRight, Phone, Palmtree, Shield, Clock,
   CheckCircle2, Star, Home, Truck, Sparkles,
   Building2, MapPin, User, Mail, MessageSquare, Send,
-  Calendar,
 } from "lucide-react";
 import { Button } from "@/react-app/components/ui/button";
 import Navbar from "@/react-app/components/Navbar";
@@ -36,8 +36,7 @@ const PROPERTY_TYPES = ["Single Family Home", "Townhome / Condo", "Multi-Family 
 const SQUARE_FOOTAGES = ["Under 1,500 sq ft", "1,500–2,500 sq ft", "2,500–4,000 sq ft", "4,000–6,000 sq ft", "6,000+ sq ft"];
 const URGENCIES = ["ASAP (within a week)", "Within 2–4 weeks", "Next month or so", "Just exploring options"];
 
-// CALENDLY LINK — replace with your real link once you create the event type
-const CALENDLY_URL = "https://calendly.com/floridacleanestimate/30min";
+const FORMSPREE_ID = "mgobbkpo";
 
 // InputField outside component — fixes the focus-loss bug
 function InputField({
@@ -75,64 +74,59 @@ function InputField({
 }
 
 // Success screen — separate component, no hooks issues
-function SuccessScreen({ firstName, email }: { firstName: string; email: string }) {
+function SuccessScreen({ firstName, phone }: { firstName: string; phone: string }) {
   return (
     <div className="min-h-screen bg-background overflow-hidden">
       <Navbar />
       <div className="min-h-screen flex items-center justify-center pt-20 px-4">
         <div className="max-w-lg w-full text-center">
-          {/* Checkmark */}
-          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-primary/30">
+
+          {/* Animated checkmark */}
+          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-primary/30 animate-pulse-glow">
             <CheckCircle2 className="w-12 h-12 text-white" />
           </div>
 
           <h1 className="text-3xl font-black text-foreground mb-3">
-            ¡Solicitud Recibida! 🎉
+            Request Received! 🎉
           </h1>
-          <p className="text-muted-foreground text-lg mb-2 leading-relaxed">
-            Gracias, <strong className="text-foreground">{firstName}</strong>. Hemos recibido tu solicitud y nos pondremos en contacto dentro de <strong className="text-foreground">24 horas</strong>, generalmente mucho antes.
-          </p>
-          <p className="text-muted-foreground text-sm mb-8">
-            Una confirmación será enviada a <strong className="text-foreground">{email}</strong>.
+          <p className="text-muted-foreground text-lg mb-6 leading-relaxed max-w-md mx-auto">
+            Thank you, <strong className="text-foreground">{firstName}</strong>! We've received your estimate request and will call you at{" "}
+            <strong className="text-foreground">{phone}</strong> within{" "}
+            <strong className="text-foreground">24 hours</strong> to give you your free quote.
           </p>
 
-          {/* Calendly CTA */}
-          <div className="bg-gradient-to-br from-primary/5 to-teal-50 border border-primary/20 rounded-3xl p-6 mb-6">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center mx-auto mb-4">
-              <Calendar className="w-6 h-6 text-white" />
+          {/* What happens next */}
+          <div className="bg-white rounded-3xl shadow-lg border border-border p-6 mb-8 text-left">
+            <h2 className="font-black text-foreground text-lg mb-4 text-center">What Happens Next</h2>
+            <div className="space-y-4">
+              {[
+                { step: "1", title: "We review your request", desc: "Our team looks over your property details and services needed.", color: "from-primary to-teal-500" },
+                { step: "2", title: "We call you", desc: "Expect a call within 24 hours — usually within a few hours — to discuss your project and give you an exact price.", color: "from-secondary to-orange-500" },
+                { step: "3", title: "We show up and get it done", desc: "Once you approve the quote, we schedule a time that works for you. No surprises.", color: "from-accent to-pink-500" },
+              ].map((item) => (
+                <div key={item.step} className="flex items-start gap-4">
+                  <div className={`w-9 h-9 rounded-full bg-gradient-to-br ${item.color} flex items-center justify-center text-white font-bold text-sm flex-shrink-0`}>
+                    {item.step}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground text-sm">{item.title}</p>
+                    <p className="text-muted-foreground text-xs leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-            <h2 className="text-lg font-black text-foreground mb-2">
-              ¿Quieres agendar tu cita ahora?
-            </h2>
-            <p className="text-muted-foreground text-sm mb-4">
-              Selecciona un horario conveniente y te llamamos para confirmar todos los detalles y darte tu precio exacto.
-            </p>
-            <a
-              href={CALENDLY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button
-                size="lg"
-                className="w-full bg-gradient-to-r from-secondary to-orange-500 hover:from-secondary/90 hover:to-orange-500/90 text-white font-bold rounded-full shadow-lg shadow-secondary/30"
-              >
-                <Calendar className="mr-2 w-5 h-5" />
-                Agendar Mi Cita en Calendly
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </a>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link to="/">
-              <Button variant="outline" className="border-2 border-primary text-primary font-bold px-8 rounded-full">
-                Volver al Inicio
+              <Button className="bg-gradient-to-r from-primary to-teal-500 text-white font-bold px-8 rounded-full">
+                Back to Home
               </Button>
             </Link>
             <a href="tel:+15551234567">
-              <Button variant="outline" className="border-2 border-border text-foreground font-bold px-8 rounded-full">
+              <Button variant="outline" className="border-2 border-primary text-primary font-bold px-8 rounded-full">
                 <Phone className="mr-2 w-4 h-4" />
-                Llamar Ahora
+                Call Us Now
               </Button>
             </a>
           </div>
@@ -151,7 +145,15 @@ export default function EstimatePage() {
     address: "", city: "", services: [],
     propertyType: "", squareFootage: "", urgency: "", message: "",
   });
+  const [state, formspreeSubmit] = useForm(FORMSPREE_ID);
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (state.succeeded) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setSubmitted(true);
+    }
+  }, [state.succeeded]);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
   const handleChange = (field: keyof FormData, value: string) => {
@@ -184,16 +186,28 @@ export default function EstimatePage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!validate()) return;
-    // Scroll to top so success message is visible
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setSubmitted(true);
+    await formspreeSubmit({
+      name: `${form.firstName} ${form.lastName}`,
+      email: form.email,
+      phone: form.phone,
+      address: `${form.address}, ${form.city}, FL`,
+      services: form.services.join(", "),
+      propertyType: form.propertyType,
+      squareFootage: form.squareFootage,
+      urgency: form.urgency,
+      message: form.message || "No additional notes",
+      _subject: `New Estimate Request - ${form.firstName} ${form.lastName} - ${form.city}, FL`,
+    });
+    // state.succeeded is updated by formspree after submission
+    // We check it in the render via useEffect
+
   };
 
   // Show success screen inline — no routing, stays on same page
   if (submitted) {
-    return <SuccessScreen firstName={form.firstName} email={form.email} />;
+    return <SuccessScreen firstName={form.firstName} phone={form.phone} />;
   }
 
   return (
@@ -399,12 +413,31 @@ export default function EstimatePage() {
 
               <Button
                 onClick={handleSubmit}
+                disabled={state.submitting}
                 size="lg"
-                className="w-full bg-gradient-to-r from-secondary to-orange-500 hover:from-secondary/90 hover:to-orange-500/90 text-white font-bold text-lg py-6 rounded-2xl shadow-xl shadow-secondary/30 btn-pulse"
+                className="w-full bg-gradient-to-r from-secondary to-orange-500 hover:from-secondary/90 hover:to-orange-500/90 text-white font-bold text-lg py-6 rounded-2xl shadow-xl shadow-secondary/30 btn-pulse disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                Send My Free Estimate Request
-                <Send className="ml-2 w-5 h-5" />
+                {state.submitting ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                    </svg>
+                    Sending...
+                  </span>
+                ) : (
+                  <>
+                    Send My Free Estimate Request
+                    <Send className="ml-2 w-5 h-5" />
+                  </>
+                )}
               </Button>
+
+              {state.errors && Object.keys(state.errors).length > 0 && (
+                <p className="text-center text-sm text-red-500 mt-3 font-medium">
+                  Something went wrong. Please try again or call us at (555) 123-4567.
+                </p>
+              )}
 
               <p className="text-center text-xs text-muted-foreground mt-4">
                 By submitting, you agree to be contacted about your estimate. We never sell your information.
