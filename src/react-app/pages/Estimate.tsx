@@ -217,9 +217,9 @@ export default function EstimatePage() {
       {/* Hero */}
       <section className="relative pt-24 sm:pt-32 pb-16">
         <div className="absolute inset-0 bg-gradient-to-b from-sky-100 via-cyan-50 to-background" />
-        <div className="absolute top-24 right-[15%] w-32 h-32 bg-gradient-to-br from-yellow-300 to-secondary rounded-full blur-sm opacity-70 animate-float-slow" />
-        <div className="absolute top-28 right-[16%] w-24 h-24 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-full animate-float" />
-        <div className="absolute bottom-0 left-10 text-primary/20 animate-float-slow">
+        <div className="hidden sm:block absolute top-16 sm:top-20 right-[8%] sm:right-[12%] w-20 h-20 sm:w-28 sm:h-28 bg-gradient-to-br from-yellow-300 to-secondary rounded-full blur-sm opacity-70 animate-float-slow" />
+        <div className="hidden sm:block absolute top-20 sm:top-24 right-[10%] sm:right-[14%] w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-full animate-float" />
+        <div className="hidden sm:block absolute bottom-0 left-10 text-primary/20 animate-float-slow">
           <Palmtree className="w-20 h-20" strokeWidth={1} />
         </div>
 

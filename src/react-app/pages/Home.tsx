@@ -40,8 +40,8 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-sky-100 via-cyan-50 to-background" />
 
         {/* Animated sun */}
-        <div className="hidden sm:block absolute top-20 sm:top-28 lg:top-32 right-[8%] sm:right-[12%] lg:right-[15%] w-20 h-20 sm:w-28 sm:h-28 lg:w-40 lg:h-40 bg-gradient-to-br from-yellow-300 to-secondary rounded-full blur-sm opacity-80 animate-float-slow" />
-        <div className="hidden sm:block absolute top-24 sm:top-32 lg:top-36 right-[9%] sm:right-[13%] lg:right-[16%] w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-full animate-float" />
+        <div className="absolute top-14 right-4 sm:top-20 sm:right-[8%] lg:top-32 lg:right-[15%] w-12 h-12 sm:w-20 sm:h-20 lg:w-40 lg:h-40 bg-gradient-to-br from-yellow-300 to-secondary rounded-full blur-sm opacity-80 animate-float-slow" />
+        <div className="absolute top-16 right-6 sm:top-24 sm:right-[9%] lg:top-36 lg:right-[16%] w-9 h-9 sm:w-16 sm:h-16 lg:w-32 lg:h-32 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-full animate-float" />
 
         {/* Wave at bottom */}
         <div className="absolute bottom-0 left-0 right-0 animate-wave">
