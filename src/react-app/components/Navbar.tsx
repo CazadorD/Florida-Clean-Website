@@ -41,21 +41,21 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-16 sm:h-20">
             {/* Logo */}
             <button
               onClick={() => handleNavClick("/")}
-              className="flex items-center gap-3 group"
+              className="flex items-center gap-2 sm:gap-3 group min-w-0"
             >
-              <div className="relative w-12 h-12 rounded-full bg-gradient-to-br from-primary to-teal-600 flex items-center justify-center shadow-lg">
-                <Sun className="w-7 h-7 text-white" />
-                <div className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-secondary rounded-full border-2 border-white" />
+              <div className="relative w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-primary to-teal-600 flex items-center justify-center shadow-lg flex-shrink-0">
+                <Sun className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
+                <div className="absolute -top-0.5 -right-0.5 w-3 h-3 sm:w-4 sm:h-4 bg-secondary rounded-full border-2 border-white" />
               </div>
-              <div className="flex flex-col text-left">
-                <span className="text-xl font-black tracking-tight text-foreground">
+              <div className="flex flex-col text-left min-w-0">
+                <span className="text-base sm:text-xl font-black tracking-tight text-foreground whitespace-nowrap">
                   FLORIDA CLEAN
                 </span>
-                <span className="text-xs text-primary font-semibold -mt-0.5">
+                <span className="hidden sm:block text-xs text-primary font-semibold -mt-0.5">
                   Pressure Washing Co.
                 </span>
               </div>

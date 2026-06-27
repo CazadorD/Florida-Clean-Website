@@ -78,7 +78,7 @@ function SuccessScreen({ firstName, phone }: { firstName: string; phone: string 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
       <Navbar />
-      <div className="min-h-screen flex items-center justify-center pt-20 px-4">
+      <div className="min-h-screen flex items-center justify-center pt-16 sm:pt-20 px-4">
         <div className="max-w-lg w-full text-center">
 
           {/* Animated checkmark */}
@@ -215,7 +215,7 @@ export default function EstimatePage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative pt-32 pb-16">
+      <section className="relative pt-24 sm:pt-32 pb-16">
         <div className="absolute inset-0 bg-gradient-to-b from-sky-100 via-cyan-50 to-background" />
         <div className="absolute top-24 right-[15%] w-32 h-32 bg-gradient-to-br from-yellow-300 to-secondary rounded-full blur-sm opacity-70 animate-float-slow" />
         <div className="absolute top-28 right-[16%] w-24 h-24 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-full animate-float" />
@@ -224,7 +224,7 @@ export default function EstimatePage() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-md border border-primary/20 mb-6 animate-pulse-glow">
+          <div className="inline-flex flex-wrap items-center justify-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white shadow-md border border-primary/20 mb-6 animate-pulse-glow max-w-full text-center">
             <span className="flex gap-0.5">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
@@ -253,7 +253,7 @@ export default function EstimatePage() {
           <div className="grid lg:grid-cols-3 gap-10 items-start">
 
             {/* FORM */}
-            <div className="lg:col-span-2 bg-white rounded-3xl shadow-xl border border-border p-8 animate-on-scroll">
+            <div className="lg:col-span-2 bg-white rounded-3xl shadow-xl border border-border p-5 sm:p-8 animate-on-scroll">
               <h2 className="text-2xl font-black text-foreground mb-8">Tell Us About Your Property</h2>
 
               {/* Step 1 */}
@@ -488,7 +488,7 @@ export default function EstimatePage() {
 
               <div className="bg-white rounded-3xl p-6 shadow-lg border border-border text-center animate-on-scroll">
                 <p className="text-sm text-muted-foreground mb-3">Prefer to talk first?</p>
-                <a href="tel:+15551234567">
+                <a href="tel:+15551234567" className="block">
                   <Button className="w-full bg-gradient-to-r from-primary to-teal-500 text-white font-bold rounded-2xl">
                     <Phone className="mr-2 w-4 h-4" />
                     (555) 123-4567

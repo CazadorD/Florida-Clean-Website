@@ -66,22 +66,22 @@ export default function DrivewayPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative min-h-[70vh] flex items-center pt-20">
+      <section className="relative min-h-[70vh] flex items-center pt-16 sm:pt-20">
         <div className="absolute inset-0 bg-gradient-to-b from-sky-100 via-cyan-50 to-background" />
-        <div className="absolute top-32 right-[15%] w-40 h-40 bg-gradient-to-br from-yellow-300 to-secondary rounded-full blur-sm opacity-80 animate-float-slow" />
-        <div className="absolute top-36 right-[16%] w-32 h-32 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-full animate-float" />
+        <div className="hidden sm:block absolute top-20 sm:top-28 lg:top-32 right-[8%] sm:right-[12%] lg:right-[15%] w-20 h-20 sm:w-28 sm:h-28 lg:w-40 lg:h-40 bg-gradient-to-br from-yellow-300 to-secondary rounded-full blur-sm opacity-80 animate-float-slow" />
+        <div className="hidden sm:block absolute top-24 sm:top-32 lg:top-36 right-[9%] sm:right-[13%] lg:right-[16%] w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-full animate-float" />
         <div className="absolute bottom-0 left-0 right-0">
           <svg viewBox="0 0 1440 120" className="w-full h-auto fill-background">
             <path d="M0,64L48,58.7C96,53,192,43,288,48C384,53,480,75,576,85.3C672,96,768,96,864,80C960,64,1056,32,1152,26.7C1248,21,1344,43,1392,53.3L1440,64L1440,120L0,120Z" />
           </svg>
         </div>
         <div className="absolute bottom-16 right-20 text-primary/15">
-          <Palmtree className="w-24 h-24 animate-float" strokeWidth={1} />
+          <Palmtree className="hidden sm:block w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 animate-float" strokeWidth={1} />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="max-w-3xl animate-slide-left">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-md border border-secondary/20 mb-6 animate-pulse-glow">
+            <div className="inline-flex flex-wrap items-center justify-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white shadow-md border border-secondary/20 mb-6 animate-pulse-glow max-w-full text-center">
               <span className="flex gap-0.5">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
@@ -115,11 +115,11 @@ export default function DrivewayPage() {
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
-              <a href="tel:+15551234567">
+              <a href="tel:+15551234567" className="w-full sm:w-auto">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold text-lg px-8 py-6 rounded-full w-full sm:w-auto"
+                  className="border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold text-lg px-8 py-6 rounded-full w-full"
                 >
                   <Phone className="mr-2 w-5 h-5" />
                   (555) 123-4567
