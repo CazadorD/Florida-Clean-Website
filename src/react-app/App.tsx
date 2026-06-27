@@ -5,10 +5,12 @@ import DrivewayPage from "@/react-app/pages/Driveway";
 import HouseWashingPage from "@/react-app/pages/HouseWashing";
 import CommercialPage from "@/react-app/pages/Commercial";
 import EstimatePage from "@/react-app/pages/Estimate";
+import ScrollToTop from "@/react-app/components/ScrollToTop";
 
 export default function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/services/roof-cleaning" element={<RoofCleaningPage />} />

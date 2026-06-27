@@ -244,14 +244,14 @@ export default function CommercialPage() {
       {/* ROI Section */}
       <section className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
             {[
               { value: "24hr", label: "Quote Turnaround", color: "from-primary to-teal-500" },
               { value: "Flex", label: "Scheduling Around You", color: "from-secondary to-orange-500" },
               { value: "Multi", label: "Location Contracts", color: "from-violet-500 to-purple-600" },
               { value: "100%", label: "Satisfaction Guaranteed", color: "from-accent to-pink-500" },
             ].map((stat) => (
-              <div key={stat.label} className="bg-white rounded-3xl p-6 shadow-lg border border-border text-center">
+              <div key={stat.label} className="bg-white rounded-3xl p-5 sm:p-6 shadow-lg border border-border text-center">
                 <div className={`text-3xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
                   {stat.value}
                 </div>

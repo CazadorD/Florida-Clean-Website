@@ -163,7 +163,7 @@ export default function HouseWashingPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-y-10 sm:gap-y-8 gap-x-8">
             {whySoftWash.map((item) => (
               <div key={item.title} className="group relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-transparent hover:border-accent/20">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -185,7 +185,7 @@ export default function HouseWashingPage() {
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-background to-primary/5" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
             {/* Surfaces */}
             <div>
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary font-semibold text-sm mb-4">
@@ -235,13 +235,13 @@ export default function HouseWashingPage() {
                 ))}
               </div>
 
-              <div className="mt-8 grid grid-cols-2 gap-4">
+              <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4">
                 {[
                   { value: "2–3x", label: "Longer Results vs Pressure Alone", color: "from-accent to-pink-500" },
                   { value: "100%", label: "Eco-Friendly Solutions", color: "from-primary to-teal-500" },
                 ].map((stat) => (
-                  <div key={stat.label} className="bg-white rounded-2xl p-5 shadow border border-border">
-                    <div className={`text-2xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-1`}>
+                  <div key={stat.label} className="bg-white rounded-2xl p-3 sm:p-5 shadow border border-border">
+                    <div className={`text-xl sm:text-2xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-1`}>
                       {stat.value}
                     </div>
                     <div className="text-xs text-muted-foreground font-medium">{stat.label}</div>

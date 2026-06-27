@@ -188,7 +188,7 @@ export default function RoofCleaningPage() {
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div>
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-4">
                 <Sun className="w-4 h-4" />
@@ -214,15 +214,15 @@ export default function RoofCleaningPage() {
             </div>
 
             {/* Stats Card */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
               {[
                 { value: "10+", label: "Years Added to Roof Life", color: "from-primary to-teal-500" },
                 { value: "100%", label: "Warranty-Safe Method", color: "from-secondary to-orange-500" },
                 { value: "2–4hrs", label: "Average Job Time", color: "from-accent to-pink-500" },
                 { value: "500+", label: "Roofs Cleaned in FL", color: "from-violet-500 to-purple-600" },
               ].map((stat) => (
-                <div key={stat.label} className="bg-white rounded-3xl p-6 shadow-lg border border-border animate-on-scroll card-lift">
-                  <div className={`text-3xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
+                <div key={stat.label} className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg border border-border animate-on-scroll card-lift">
+                  <div className={`text-2xl sm:text-3xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-1 sm:mb-2`}>
                     {stat.value}
                   </div>
                   <div className="text-sm text-muted-foreground font-medium leading-snug">{stat.label}</div>

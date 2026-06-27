@@ -183,7 +183,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-y-10 sm:gap-y-8 gap-x-8">
             {[
               { icon: Clock, title: "Always On Time", desc: "We show up when we say we will. No waiting around. Your time is valuable, and our crews work efficiently to get you back to enjoying your day.", color: "from-primary to-teal-500" },
               { icon: Sparkles, title: "Commercial-Grade Power", desc: "Our truck-mounted systems deliver 10x the cleaning power of consumer machines. Deeper cleans that last longer, even in Florida's tough climate.", color: "from-secondary to-orange-500" },

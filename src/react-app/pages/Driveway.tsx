@@ -195,7 +195,7 @@ export default function DrivewayPage() {
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 via-background to-primary/5" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div>
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-4">
                 <Sun className="w-4 h-4" />
@@ -220,15 +220,15 @@ export default function DrivewayPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
               {[
                 { value: "4,000", label: "PSI Max Pressure", color: "from-secondary to-orange-500" },
                 { value: "Hot", label: "Water Extraction System", color: "from-primary to-teal-500" },
                 { value: "1–3hrs", label: "Average Job Time", color: "from-accent to-pink-500" },
                 { value: "100%", label: "Satisfaction Guaranteed", color: "from-violet-500 to-purple-600" },
               ].map((stat) => (
-                <div key={stat.label} className="bg-white rounded-3xl p-6 shadow-lg border border-border animate-on-scroll card-lift">
-                  <div className={`text-3xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
+                <div key={stat.label} className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg border border-border animate-on-scroll card-lift">
+                  <div className={`text-2xl sm:text-3xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-1 sm:mb-2`}>
                     {stat.value}
                   </div>
                   <div className="text-sm text-muted-foreground font-medium leading-snug">{stat.label}</div>
