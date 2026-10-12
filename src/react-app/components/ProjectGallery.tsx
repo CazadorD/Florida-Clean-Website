@@ -28,7 +28,6 @@ export default function ProjectGallery({ service }: { service?: "driveway" | "si
           <ProjectPhoto name="driveway-before" compact alt="Driveway before cleaning, with dark staining on the concrete near the garage and hoses across the surface" label="Before · Driveway" />
           <ProjectPhoto name="driveway-after" landscape compact alt="The driveway after cleaning, viewed toward the garage" label="After · Driveway" />
         </div>
-        <p className="mt-3 text-sm text-muted-foreground">Different views of the same driveway. Camera angle, lighting, and surface moisture differ between photos. Select a photo to view it larger.</p>
       </div>
       {service !== "driveway" && <div className="mt-9">
         <h3 className="mb-4 text-xl font-bold">Front walkway: before and after</h3>
@@ -38,7 +37,6 @@ export default function ProjectGallery({ service }: { service?: "driveway" | "si
           <ProjectPhoto name="walkway-before-corner" compact alt="Walkway junction before cleaning, with dark buildup around the corner" label="Before · Walkway corner" />
           <ProjectPhoto name="walkway-after-wide" compact alt="Front walkway after cleaning, with a wider diagonal view of the path and its junction with the sidewalk" label="After · Walkway corner" />
         </div>
-        <p className="mt-3 text-sm text-muted-foreground">The photos were taken from different angles and under different lighting conditions. Select a photo to view it larger.</p>
       </div>}
       <div className="mt-9">
         <h3 className="mb-4 text-xl font-bold">Finished sidewalk</h3>
