@@ -82,7 +82,7 @@ export default function EstimatePage() {
       <Link to="/" className="mt-8 inline-flex rounded-full bg-primary px-6 py-3 font-bold text-white">Back to Home</Link>
     </section> : <>
       <section className="relative overflow-hidden bg-gradient-to-b from-sky-100 via-cyan-50 to-background pb-12 pt-36"><HeroSun />
-        <div className="relative mx-auto max-w-3xl px-4 text-center"><p className="mb-4 font-semibold text-primary">FREE, NO-OBLIGATION QUOTE</p><h1 className="text-4xl font-black sm:text-5xl">Let's talk about<br /><span className="text-primary">your project.</span></h1><p className="mt-5 text-lg text-muted-foreground">A few details help us understand what you need. We'll follow up by email.</p></div>
+        <div className="relative mx-auto max-w-3xl px-4 text-center"><p className="mb-4 font-semibold text-primary">FREE, NO-OBLIGATION QUOTE</p><h1 className="hero-title text-4xl font-black sm:text-5xl">Let's talk about<br /><span className="text-primary">your project.</span></h1><p className="mt-5 text-lg text-muted-foreground">A few details help us understand what you need. We'll follow up by email.</p></div>
       </section>
       <section className="mx-auto grid max-w-6xl items-start gap-8 px-4 pb-20 pt-6 sm:px-6 lg:grid-cols-3">
         <form onSubmit={handleSubmit} noValidate aria-label="Request a cleaning quote" aria-busy={state.submitting} className="rounded-3xl border border-border bg-white p-5 shadow-lg sm:p-8 lg:col-span-2">

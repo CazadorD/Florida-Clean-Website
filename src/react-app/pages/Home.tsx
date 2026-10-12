@@ -11,7 +11,7 @@ export default function HomePage() {
     <section className="relative overflow-hidden bg-gradient-to-b from-sky-100 via-cyan-50 to-background pb-16 pt-36 sm:pb-24 sm:pt-44">
       <HeroSun /><div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
         <div><p className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white px-4 py-2 text-sm font-semibold text-primary"><Sun aria-hidden="true" className="h-4 w-4" /> Exterior cleaning in Florida</p>
-          <h1 className="text-4xl font-black leading-tight sm:text-5xl lg:text-6xl">A fresh start for<br /><span className="text-primary">your outdoor spaces.</span></h1>
+          <h1 className="hero-title text-4xl font-black sm:text-5xl lg:text-6xl">A fresh start for<br /><span className="text-primary">your outdoor spaces.</span></h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">Driveways, sidewalks, siding, and fences. Tell us what needs cleaning, and we'll review your property details before providing a quote.</p>
           <Link to="/estimate" className="mt-8 inline-flex items-center gap-3 rounded-full bg-secondary px-7 py-4 font-bold text-white shadow-lg">Get Your Free Quote <ArrowRight aria-hidden="true" className="h-5 w-5" /></Link>
           <p className="mt-4 text-sm text-muted-foreground">No obligation. Scope and price agreed before work begins.</p>

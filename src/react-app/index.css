@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Leave room for descenders at every responsive heading size. */
+h1.hero-title {
+  line-height: 1.2;
+  padding-bottom: 0.12em;
+  overflow: visible;
+  overflow-wrap: break-word;
+}
+
 
 
 @layer base {
