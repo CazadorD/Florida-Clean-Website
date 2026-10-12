@@ -10,13 +10,13 @@ test.beforeEach(async ({ context }) => {
 });
 
 async function fillRequired(page: Page) {
-  await page.getByLabel('First Name', { exact: true }).fill('Test Owner');
-  await page.getByLabel('Last Name', { exact: true }).fill('Example');
+  await page.getByLabel('First Name', { exact: false }).fill('Test Owner');
+  await page.getByLabel('Last Name', { exact: false }).fill('Example');
   await page.getByLabel('Email Address (optional)', { exact: true }).fill('test@example.com');
-  await page.getByLabel('Phone Number', { exact: true }).fill('(202) 555-0100');
-  await page.getByLabel('Street Address', { exact: true }).fill('Test address');
-  await page.getByLabel('City', { exact: true }).fill('Riverview');
-  await page.getByLabel('ZIP Code', { exact: true }).fill('33578');
+  await page.getByLabel('Phone Number', { exact: false }).fill('(202) 555-0100');
+  await page.getByLabel('Street Address', { exact: false }).fill('Test address');
+  await page.getByLabel('City', { exact: false }).fill('Riverview');
+  await page.getByLabel('ZIP Code', { exact: false }).fill('33578');
   await page.getByRole('button', { name: 'Single Family Home', exact: true }).click();
   await page.getByRole('button', { name: 'Under 1,500 sq ft', exact: true }).click();
   await page.getByRole('button', { name: 'Within 2–4 weeks', exact: true }).click();
@@ -27,7 +27,7 @@ test('validates required fields and preserves entered values without sending', a
   let requests = 0;
   await page.route(endpoint, route => { requests++; return route.abort(); });
   await page.goto('/estimate');
-  await page.getByLabel('First Name', { exact: true }).fill('   ');
+  await page.getByLabel('First Name', { exact: false }).fill('   ');
   await page.getByLabel('Email Address (optional)', { exact: true }).fill('wrong');
   await page.getByRole('button', { name: 'Send My Free Estimate Request' }).click();
   await expect(page.getByRole('alert')).toBeFocused();
@@ -96,7 +96,7 @@ test('server field rejection keeps data and allows successful retry', async ({ p
   await fillRequired(page);
   await page.getByRole('button', { name: 'Send My Free Estimate Request' }).click();
   await expect(page.getByRole('alert')).toContainText('Email rejected for test');
-  await expect(page.getByLabel('First Name', { exact: true })).toHaveValue('Test Owner');
+  await expect(page.getByLabel('First Name', { exact: false })).toHaveValue('Test Owner');
   await page.getByRole('button', { name: 'Send My Free Estimate Request' }).click();
   await expect(page.getByRole('heading', { name: 'Request Received! 🎉' })).toBeVisible();
   expect(attempts).toBe(2);
@@ -126,18 +126,18 @@ test('phone and ZIP reject blank or invalid values; ZIP+4 and empty message are 
   await page.route(endpoint, route => route.fulfill({ status: 200, json: { ok: true, next: '/thanks' } }));
   await page.goto('/estimate');
   await fillRequired(page);
-  await page.getByLabel('Phone Number', { exact: true }).fill('123');
-  await page.getByLabel('ZIP Code', { exact: true }).fill('abc');
+  await page.getByLabel('Phone Number', { exact: false }).fill('123');
+  await page.getByLabel('ZIP Code', { exact: false }).fill('abc');
   await page.getByRole('button', { name: 'Send My Free Estimate Request' }).click();
   await expect(page.getByRole('alert')).toContainText('Enter a valid phone number');
   await expect(page.getByRole('alert')).toContainText('Enter a valid ZIP code');
-  await page.getByLabel('Phone Number', { exact: true }).fill('');
-  await page.getByLabel('ZIP Code', { exact: true }).fill('');
+  await page.getByLabel('Phone Number', { exact: false }).fill('');
+  await page.getByLabel('ZIP Code', { exact: false }).fill('');
   await page.getByRole('button', { name: 'Send My Free Estimate Request' }).click();
   await expect(page.getByRole('alert')).toContainText('Enter a valid phone number');
   await expect(page.getByRole('alert')).toContainText('Enter a valid ZIP code');
-  await page.getByLabel('Phone Number', { exact: true }).fill('(202) 555-0100');
-  await page.getByLabel('ZIP Code', { exact: true }).fill('33578-1234');
+  await page.getByLabel('Phone Number', { exact: false }).fill('(202) 555-0100');
+  await page.getByLabel('ZIP Code', { exact: false }).fill('33578-1234');
   await page.getByRole('button', { name: 'Send My Free Estimate Request' }).click();
   await expect(page.getByRole('heading', { name: 'Request Received! 🎉' })).toBeVisible();
 });
