@@ -21,7 +21,7 @@ export default function ProjectGallery({ service }: { service?: "driveway" | "si
     <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
       <p className="text-sm font-bold tracking-widest text-primary">A REAL PROJECT</p>
       <h2 id="project-heading" className="mt-3 text-3xl font-black sm:text-4xl">A fresh look, close to home.</h2>
-      <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">Driveway and walkway cleaning at the owner's own property. These photos document one Florida Clean project.</p>
+      <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">Driveway and walkway cleaning.</p>
       <div className="mt-9">
         <h3 className="mb-4 text-xl font-bold">Driveway: before and after</h3>
         <div className="grid gap-5 sm:grid-cols-2">

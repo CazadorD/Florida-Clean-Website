@@ -11,8 +11,15 @@ test.beforeEach(async ({ context }) => {
 
 async function fillRequired(page: Page) {
   await page.getByLabel('First Name', { exact: true }).fill('Test Owner');
-  await page.getByLabel('Email Address', { exact: true }).fill('test@example.com');
-  await page.getByLabel('City', { exact: true }).fill('33880');
+  await page.getByLabel('Last Name', { exact: true }).fill('Example');
+  await page.getByLabel('Email Address (optional)', { exact: true }).fill('test@example.com');
+  await page.getByLabel('Phone Number', { exact: true }).fill('(202) 555-0100');
+  await page.getByLabel('Street Address', { exact: true }).fill('Test address');
+  await page.getByLabel('City', { exact: true }).fill('Riverview');
+  await page.getByLabel('ZIP Code', { exact: true }).fill('33578');
+  await page.getByRole('button', { name: 'Single Family Home', exact: true }).click();
+  await page.getByRole('button', { name: 'Under 1,500 sq ft', exact: true }).click();
+  await page.getByRole('button', { name: 'Within 2–4 weeks', exact: true }).click();
   await page.getByLabel('Driveway & Sidewalk', { exact: true }).check();
 }
 
@@ -21,16 +28,19 @@ test('validates required fields and preserves entered values without sending', a
   await page.route(endpoint, route => { requests++; return route.abort(); });
   await page.goto('/estimate');
   await page.getByLabel('First Name', { exact: true }).fill('   ');
-  await page.getByLabel('Email Address', { exact: true }).fill('wrong');
+  await page.getByLabel('Email Address (optional)', { exact: true }).fill('wrong');
   await page.getByRole('button', { name: 'Send My Free Estimate Request' }).click();
   await expect(page.getByRole('alert')).toBeFocused();
   await expect(page.getByRole('alert')).toContainText('Enter a valid email');
   await expect(page.getByRole('alert')).toContainText('Choose at least one service');
-  await expect(page.getByLabel('Email Address', { exact: true })).toHaveValue('wrong');
+  for (const message of ['Enter your last name.', 'Enter a valid phone number.', 'Enter your street address.', 'Enter your city.', 'Enter a valid ZIP code', 'Choose your property type.', 'Choose the approximate square footage.', 'Choose when you need the service.']) {
+    await expect(page.getByRole('alert')).toContainText(message);
+  }
+  await expect(page.getByLabel('Email Address (optional)', { exact: true })).toHaveValue('wrong');
   expect(requests).toBe(0);
 });
 
-test('Enter submits selected services and optional fields, confirmation waits for acceptance', async ({ page }) => {
+test('Enter sends every required detail and optional message once, waits for acceptance', async ({ page }) => {
   let requests = 0;
   let body: Record<string, string> = {};
   let release!: () => void;
@@ -44,10 +54,8 @@ test('Enter submits selected services and optional fields, confirmation waits fo
   await page.goto('/estimate?service=fence');
   await expect(page.getByLabel('Fence Cleaning', { exact: true })).toBeChecked();
   await fillRequired(page);
-  await page.getByLabel('Phone Number (optional)', { exact: true }).fill('(202) 555-0100');
-  await page.getByLabel('Street Address (optional)').fill('Test address');
   await page.getByLabel('Anything else? (optional)').fill('Both sides of fence.');
-  await page.getByLabel('Email Address', { exact: true }).press('Enter');
+  await page.getByLabel('Email Address (optional)', { exact: true }).press('Enter');
   await expect(page.getByRole('button', { name: 'Sending...' })).toBeDisabled();
   await expect(page.getByRole('heading', { name: 'Request Received! 🎉' })).toHaveCount(0);
   await page.getByRole('form').evaluate(form => {
@@ -56,7 +64,24 @@ test('Enter submits selected services and optional fields, confirmation waits fo
   release();
   await expect(page.getByRole('heading', { name: 'Request Received! 🎉' })).toBeFocused();
   expect(requests).toBe(1);
-  expect(body).toMatchObject({ name: 'Test Owner', email: 'test@example.com', city: '33880', services: 'Driveway & Sidewalk, Fence Cleaning', phone: '(202) 555-0100', address: 'Test address', message: 'Both sides of fence.', _gotcha: '' });
+  expect(body).toMatchObject({ name: 'Test Owner Example', email: 'test@example.com', city: 'Riverview', state: 'Florida', zipCode: '33578', services: 'Driveway & Sidewalk, Fence Cleaning', phone: '(202) 555-0100', address: 'Test address', propertyType: 'Single Family Home', squareFootage: 'Under 1,500 sq ft', urgency: 'Within 2–4 weeks', message: 'Both sides of fence.', _gotcha: '' });
+});
+
+test('optional email can be omitted and confirmation uses the required phone', async ({ page }) => {
+  let body: Record<string, string> = {};
+  await page.route(endpoint, route => {
+    body = route.request().postDataJSON();
+    return route.fulfill({ status: 200, json: { ok: true, next: '/thanks' } });
+  });
+  await page.goto('/estimate');
+  await fillRequired(page);
+  await page.getByLabel('Email Address (optional)', { exact: true }).fill('   ');
+  await expect(page.getByLabel('Email Address (optional)', { exact: true })).not.toHaveAttribute('required', '');
+  await page.getByRole('button', { name: 'Send My Free Estimate Request' }).click();
+  await expect(page.getByRole('heading', { name: 'Request Received! 🎉' })).toBeVisible();
+  await expect(page.locator('main')).toContainText('by phone at (202) 555-0100');
+  expect(body).not.toHaveProperty('email');
+  expect(body.phone).toBe('(202) 555-0100');
 });
 
 test('server field rejection keeps data and allows successful retry', async ({ page }) => {
@@ -84,7 +109,7 @@ test('network failure does not claim success or erase data', async ({ page }) =>
   await page.getByRole('button', { name: 'Send My Free Estimate Request' }).click();
   await expect(page.getByRole('alert')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Request Received! 🎉' })).toHaveCount(0);
-  await expect(page.getByLabel('Email Address', { exact: true })).toHaveValue('test@example.com');
+  await expect(page.getByLabel('Email Address (optional)', { exact: true })).toHaveValue('test@example.com');
   await expect(page.getByRole('button', { name: 'Send My Free Estimate Request' })).toBeEnabled();
 });
 
@@ -97,14 +122,22 @@ test('rate limit is reported without a false confirmation', async ({ page }) => 
   await expect(page.getByRole('heading', { name: 'Request Received! 🎉' })).toHaveCount(0);
 });
 
-test('optional phone rejects invalid input and may be left empty', async ({ page }) => {
+test('phone and ZIP reject blank or invalid values; ZIP+4 and empty message are accepted', async ({ page }) => {
   await page.route(endpoint, route => route.fulfill({ status: 200, json: { ok: true, next: '/thanks' } }));
   await page.goto('/estimate');
   await fillRequired(page);
-  await page.getByLabel('Phone Number (optional)', { exact: true }).fill('123');
+  await page.getByLabel('Phone Number', { exact: true }).fill('123');
+  await page.getByLabel('ZIP Code', { exact: true }).fill('abc');
   await page.getByRole('button', { name: 'Send My Free Estimate Request' }).click();
   await expect(page.getByRole('alert')).toContainText('Enter a valid phone number');
-  await page.getByLabel('Phone Number (optional)', { exact: true }).fill('');
+  await expect(page.getByRole('alert')).toContainText('Enter a valid ZIP code');
+  await page.getByLabel('Phone Number', { exact: true }).fill('');
+  await page.getByLabel('ZIP Code', { exact: true }).fill('');
+  await page.getByRole('button', { name: 'Send My Free Estimate Request' }).click();
+  await expect(page.getByRole('alert')).toContainText('Enter a valid phone number');
+  await expect(page.getByRole('alert')).toContainText('Enter a valid ZIP code');
+  await page.getByLabel('Phone Number', { exact: true }).fill('(202) 555-0100');
+  await page.getByLabel('ZIP Code', { exact: true }).fill('33578-1234');
   await page.getByRole('button', { name: 'Send My Free Estimate Request' }).click();
   await expect(page.getByRole('heading', { name: 'Request Received! 🎉' })).toBeVisible();
 });
