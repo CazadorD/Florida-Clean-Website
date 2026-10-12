@@ -122,7 +122,7 @@ test('mobile menu, service selection, and retired URLs match current scope', asy
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   for (const path of ['/services/roof-cleaning', '/services/commercial']) {
     await page.goto(path);
-    await expect(page.getByRole('heading', { name: 'This service is not currently offered' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible();
   }
   await page.goto('/services/house-washing');
   await expect(page).toHaveURL(/siding-cleaning/);

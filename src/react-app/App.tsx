@@ -14,8 +14,6 @@ export default function App() {
     <Route path="/privacy" element={<Privacy />} />
     <Route path="/services/driveway-sidewalk" element={<Navigate to="/services/driveway-cleaning" replace />} />
     <Route path="/services/house-washing" element={<Navigate to="/services/siding-cleaning" replace />} />
-    <Route path="/services/roof-cleaning" element={<Unavailable retired />} />
-    <Route path="/services/commercial" element={<Unavailable retired />} />
     <Route path="*" element={<Unavailable />} />
   </Routes></Router>;
 }

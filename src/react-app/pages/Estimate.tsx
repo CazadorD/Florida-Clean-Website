@@ -115,7 +115,7 @@ export default function EstimatePage() {
             <button type="submit" disabled={state.submitting} className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-secondary px-4 py-4 font-bold text-white disabled:opacity-60"><Send aria-hidden="true" className="h-5 w-5 shrink-0" /><span>{state.submitting ? "Sending…" : "Send Quote Request"}</span></button>
           </fieldset>
         </form>
-        <aside className="rounded-3xl bg-primary/5 p-6"><h2 className="text-xl font-bold">What happens next?</h2><ol className="mt-5 list-inside list-decimal space-y-4 text-muted-foreground"><li>We review the services and location you shared.</li><li>We may ask for photos, measurements, or a property visit.</li><li>We agree on scope, price, and timing before booking.</li></ol><p className="mt-6 border-t border-primary/20 pt-5 text-sm text-muted-foreground">Currently accepting requests for driveways, sidewalks, siding, and fences. Roof cleaning is not offered.</p></aside>
+        <aside className="rounded-3xl bg-primary/5 p-6"><h2 className="text-xl font-bold">What happens next?</h2><ol className="mt-5 list-inside list-decimal space-y-4 text-muted-foreground"><li>We review the services and location you shared.</li><li>We may ask for photos, measurements, or a property visit.</li><li>We agree on scope, price, and timing before booking.</li></ol><p className="mt-6 border-t border-primary/20 pt-5 text-sm text-muted-foreground">Currently accepting requests for driveways, sidewalks, siding, and fences.</p></aside>
       </section>
     </>}
   </main><Footer /></div>;
