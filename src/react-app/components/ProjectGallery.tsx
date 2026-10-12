@@ -22,6 +22,14 @@ export default function ProjectGallery({ service }: { service?: "driveway" | "si
       <p className="text-sm font-bold tracking-widest text-primary">A REAL PROJECT</p>
       <h2 id="project-heading" className="mt-3 text-3xl font-black sm:text-4xl">A fresh look, close to home.</h2>
       <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">Driveway and walkway cleaning at the owner's own property. These photos document one project by Multiservicios Elite LLC.</p>
+      <div className="mt-9">
+        <h3 className="mb-4 text-xl font-bold">Driveway: before and after</h3>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <ProjectPhoto name="driveway-before" compact alt="Driveway before cleaning, with dark staining on the concrete near the garage and hoses across the surface" label="Before · Driveway" />
+          <ProjectPhoto name="driveway-after" landscape compact alt="The driveway after cleaning, viewed toward the garage" label="After · Driveway" />
+        </div>
+        <p className="mt-3 text-sm text-muted-foreground">Different views of the same driveway. Camera angle, lighting, and surface moisture differ between photos. Select a photo to view it larger.</p>
+      </div>
       {service !== "driveway" && <div className="mt-9">
         <h3 className="mb-4 text-xl font-bold">Front walkway: before and after</h3>
         <div className="grid gap-5 sm:grid-cols-2">
@@ -31,9 +39,8 @@ export default function ProjectGallery({ service }: { service?: "driveway" | "si
         <p className="mt-3 text-sm text-muted-foreground">The photos were taken from different angles and under different lighting conditions. Select a photo to view it larger.</p>
       </div>}
       <div className="mt-9">
-        <h3 className="mb-4 text-xl font-bold">Finished surfaces</h3>
-        <div className="grid items-start gap-5 sm:grid-cols-2">
-          <ProjectPhoto name="driveway-after" landscape compact alt="Cleaned driveway at the owner's property, viewed toward the garage" label="After · Driveway" />
+        <h3 className="mb-4 text-xl font-bold">Finished sidewalk</h3>
+        <div className="max-w-xl">
           <ProjectPhoto name="sidewalk-after" compact alt="Cleaned sidewalk beside the owner's driveway" label="After · Sidewalk" />
         </div>
       </div>
