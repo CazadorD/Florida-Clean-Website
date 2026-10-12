@@ -36,4 +36,3 @@ export default function HomePage() {
     <section className="px-4 py-20 text-center"><h2 className="text-3xl font-black">Have a project in mind?</h2><p className="mx-auto mt-4 max-w-xl text-muted-foreground">Start with a few details. You don't need exact measurements to ask for a quote.</p><Link to="/estimate" className="mt-7 inline-flex rounded-full bg-secondary px-7 py-4 font-bold text-white">Request a Free Quote</Link></section>
   </main><Footer /></div>;
 }
-

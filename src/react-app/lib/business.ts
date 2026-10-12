@@ -7,4 +7,3 @@ export const SERVICES = [
   { id: "fence", name: "Fence Cleaning", shortName: "Fences", path: "/services/fence-cleaning", description: "Cleaning for suitable fence surfaces, assessed before work begins.", detail: "Share the fence material, approximate length, and whether one or both sides need cleaning. The method depends on its condition and existing finish.", notes: ["Material and finish reviewed first", "One-sided or two-sided cleaning as agreed", "No fence repairs, staining, or painting"] },
 ] as const;
 export type Service = (typeof SERVICES)[number];
-

@@ -15,7 +15,7 @@
 - `npm run build` compiles the site.
 - `npm test` runs browser tests using Chrome. Install Chrome or adjust the Playwright channel for your environment.
 - Automated tests block external network requests and simulate Formspree responses; they never send real leads.
-- One owner-authorized live request on October 12, 2026 returned HTTP 200 with `ok: true` from Formspree. Marker: `ELITE-1210`. Inbox receipt is still awaiting owner confirmation. The test used `qa@example.com`, a reserved example address, and is not a real customer or booking.
+- One owner-authorized live request on October 12, 2026 returned HTTP 200 with `ok: true` from Formspree. Marker: `ELITE-1210`. The owner reported that the test email had not arrived yet. Provider acceptance is verified; inbox delivery and the configured recipient remain unverified. The test used `qa@example.com`, a reserved example address, and is not a real customer or booking.
 
 ## Owner follow-up
 

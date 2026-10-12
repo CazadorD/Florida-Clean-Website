@@ -8,4 +8,3 @@ export default function Footer() {
     <p className="mt-6 text-xs text-white/70">© {new Date().getFullYear()} {BUSINESS.legalName}. All rights reserved.</p>
   </footer>;
 }
-
