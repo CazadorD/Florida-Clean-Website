@@ -32,9 +32,11 @@ export default function ProjectGallery({ service }: { service?: "driveway" | "si
       </div>
       {service !== "driveway" && <div className="mt-9">
         <h3 className="mb-4 text-xl font-bold">Front walkway: before and after</h3>
-        <div className="grid gap-5 sm:grid-cols-2">
-          <ProjectPhoto name="walkway-before" alt="Front walkway before cleaning, with dark buildup across the concrete near the porch" label="Before · Front walkway" />
-          <ProjectPhoto name="walkway-after" alt="The same front walkway after cleaning, leading toward the front door" label="After · Front walkway" />
+        <div className="grid max-w-3xl grid-cols-2 gap-3 sm:gap-4">
+          <ProjectPhoto name="walkway-before" compact alt="Front walkway before cleaning, with dark buildup across the concrete near the porch" label="Before · Porch path" />
+          <ProjectPhoto name="walkway-after" compact alt="Front walkway after cleaning, leading toward the front door" label="After · Porch path" />
+          <ProjectPhoto name="walkway-before-corner" compact alt="Walkway junction before cleaning, with dark buildup around the corner" label="Before · Walkway corner" />
+          <ProjectPhoto name="walkway-after-wide" compact alt="Front walkway after cleaning, with a wider diagonal view of the path and its junction with the sidewalk" label="After · Walkway corner" />
         </div>
         <p className="mt-3 text-sm text-muted-foreground">The photos were taken from different angles and under different lighting conditions. Select a photo to view it larger.</p>
       </div>}
