@@ -2,16 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Leave room for descenders at every responsive heading size. */
-h1.hero-title {
-  line-height: 1.2;
-  padding-bottom: 0.12em;
-  overflow: visible;
-  overflow-wrap: break-word;
-}
-
-
-
 @layer base {
   :root {
     --background: 45 30% 97%;
@@ -20,9 +10,9 @@ h1.hero-title {
     --card-foreground: 200 35% 15%;
     --popover: 0 0% 100%;
     --popover-foreground: 200 35% 15%;
-    --primary: 175 75% 28%;
+    --primary: 175 75% 40%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 25 90% 37%;
+    --secondary: 25 95% 58%;
     --secondary-foreground: 0 0% 100%;
     --muted: 45 20% 92%;
     --muted-foreground: 200 15% 40%;
@@ -294,9 +284,9 @@ html {
   }
 }
 
+/* Preserve original title metrics; extend only the gradient paint area for descenders. */
+h1.hero-title { line-height: 1.1; overflow: visible; }
+h1.hero-title .hero-gradient { padding-bottom: .14em; margin-bottom: -.14em; }
 :focus-visible { outline: 3px solid hsl(var(--primary)); outline-offset: 3px; }
 [id] { scroll-margin-top: 6rem; }
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-  .animate-on-scroll, .animate-slide-left, .animate-slide-right, .animate-scale { opacity: 1; transform: none; }
-}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } .animate-on-scroll, .animate-slide-left, .animate-slide-right, .animate-scale { opacity: 1; transform: none; } }

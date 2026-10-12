@@ -1,10 +1,21 @@
-import { Link } from "react-router";
-import { BUSINESS } from "@/react-app/lib/business";
+import { Sun } from "lucide-react";
+
 export default function Footer() {
-  return <footer className="bg-foreground px-4 py-10 text-center text-white">
-    <p className="text-lg font-bold">{BUSINESS.legalName}</p>
-    <p className="mt-2 text-sm text-white/80">Driveways · Sidewalks · Siding · Fences</p>
-    <div className="mt-4 flex justify-center gap-6 text-sm"><Link className="underline underline-offset-4" to="/estimate">Request a quote</Link><Link className="underline underline-offset-4" to="/privacy">Privacy</Link></div>
-    <p className="mt-6 text-xs text-white/70">© {new Date().getFullYear()} {BUSINESS.legalName}. All rights reserved.</p>
-  </footer>;
+  return (
+    <footer className="bg-foreground py-12 text-center">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex items-center justify-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center">
+            <Sun className="w-5 h-5 text-white" />
+          </div>
+          <span className="text-xl font-bold text-white">FLORIDA CLEAN</span>
+        </div>
+        <p className="text-white/60 text-sm mb-1">Driveways · Sidewalks · House Washing · Fences</p>
+        <p className="text-white/40 text-xs">
+          © {new Date().getFullYear()} Florida Clean. Operated by Multiservicios Elite LLC. All rights reserved.
+        </p>
+        <a href="/privacy" className="inline-block mt-3 text-xs text-white/60 underline">Quote request privacy</a>
+      </div>
+    </footer>
+  );
 }

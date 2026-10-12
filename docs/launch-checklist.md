@@ -2,12 +2,13 @@
 
 ## Implemented
 
-- Current services: driveways, sidewalks, siding, and fences.
+- Current services: driveways, sidewalks, house washing (including siding), and fences.
 - Removed fabricated testimonials, ratings, unsupported performance promises, discounts, insurance/license claims, and placeholder telephone numbers.
-- Multiservicios Elite LLC is the operator; its name is used provisionally until the owner selects a separate public brand. This change does not register a DBA.
-- Roof and commercial service pages and visible mentions are removed. Their old URLs reach the generic page-not-found screen; former driveway and house-washing URLs redirect to the corresponding current services.
+- Florida Clean remains the public brand at the owner’s explicit request. Multiservicios Elite LLC appears only as the legal operator. This change does not register a DBA or establish name availability.
+- Roof and commercial service pages and visible mentions are removed. Their old URLs reach the generic page-not-found screen; the original driveway-sidewalk and house-washing pages retain their URLs. The siding URL redirects to House Washing.
 - Kept Formspree form `mgobbkpo`. Its identifier is public configuration, not a secret.
 - Accessible quote form with required name, email, city/ZIP, and services; optional telephone, street address, and notes. Preserves data on failure, guards repeat submissions, and confirms success only after acceptance.
+- Original website layout, palette, Inter typography, responsive title sizes, gradients, navigation branding, and form steps are preserved. Fence Cleaning follows the original service page structure. The gradient title paint area has a small descender allowance without changing font size or line height.
 - Sun halo and disk share a single positioned, animated parent. Reduced-motion preferences are respected.
 
 ## Validation
