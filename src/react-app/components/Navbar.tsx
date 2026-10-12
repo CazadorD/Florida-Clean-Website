@@ -53,7 +53,7 @@ export default function Navbar() {
               </div>
               <div className="flex flex-col text-left min-w-0">
                 <span className="text-base sm:text-xl font-black tracking-tight text-foreground whitespace-nowrap">
-                  FLORIDA CLEAN
+                  Florida SunRinse
                 </span>
                 <span className="hidden sm:block text-xs text-primary font-semibold -mt-0.5">
                   Pressure Washing Co.

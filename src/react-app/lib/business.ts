@@ -1,5 +1,5 @@
-// Florida Clean is the public brand; Multiservicios Elite LLC is the operator.
-export const BUSINESS = { name: "Florida Clean", legalName: "Multiservicios Elite LLC", formspreeId: "mgobbkpo" };
+// Florida SunRinse is the public brand; Multiservicios Elite LLC is the operator.
+export const BUSINESS = { name: "Florida SunRinse", legalName: "Multiservicios Elite LLC", formspreeId: "mgobbkpo" };
 export const SERVICES = [
   { id: "driveway", name: "Driveway Cleaning", shortName: "Driveways", path: "/services/driveway-cleaning", description: "Cleaning for driveways with dirt and organic buildup.", detail: "Tell us about your driveway material, approximate size, and any stains. We assess the surface before recommending a cleaning approach.", notes: ["Concrete driveways", "Surface condition reviewed before work", "Oil, rust, and older stains may not come out completely"] },
   { id: "sidewalk", name: "Sidewalk Cleaning", shortName: "Sidewalks", path: "/services/sidewalk-cleaning", description: "Refresh sidewalks and walking paths around your property.", detail: "Request cleaning for sidewalks and paths with accumulated dirt and organic growth. Include the approximate length or area if you know it.", notes: ["Sidewalks and walking paths", "Access and drainage considered before cleaning", "Cracks and existing damage assessed separately"] },

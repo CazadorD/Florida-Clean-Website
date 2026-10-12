@@ -213,7 +213,7 @@ export default function EstimatePage() {
         services: SERVICES.filter(s => form.services.includes(s.id)).map(s => s.label).join(", "),
         propertyType: form.propertyType, squareFootage: form.squareFootage, urgency: form.urgency,
         message: form.message.trim(), _gotcha: gotcha,
-        _subject: `Florida Clean estimate — ${form.firstName.trim()} — ${form.city.trim()}`,
+        _subject: `Florida SunRinse estimate — ${form.firstName.trim()} — ${form.city.trim()}`,
       });
     } catch {
       reset();
@@ -461,7 +461,7 @@ export default function EstimatePage() {
 
 
               <p className="text-center text-xs text-muted-foreground mt-4">
-                By submitting, you ask Multiservicios Elite LLC, operator of Florida Clean, to contact you about your estimate. <Link to="/privacy" className="underline">Privacy details</Link>.
+                By submitting, you ask Multiservicios Elite LLC, operator of Florida SunRinse, to contact you about your estimate. <Link to="/privacy" className="underline">Privacy details</Link>.
               </p>
               </fieldset>
             </form>
@@ -469,7 +469,7 @@ export default function EstimatePage() {
             {/* SIDEBAR */}
             <div className="space-y-6">
               <div className="bg-white rounded-3xl p-6 shadow-lg border border-border animate-on-scroll">
-                <h3 className="font-black text-foreground text-lg mb-5">Why Choose Florida Clean?</h3>
+                <h3 className="font-black text-foreground text-lg mb-5">Why Choose Florida SunRinse?</h3>
                 <div className="space-y-4">
                   {[
                     { icon: Clock, label: "Plan Your Project", desc: "Availability confirmed before booking", color: "text-primary", bg: "bg-primary/10" },

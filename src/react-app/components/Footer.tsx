@@ -8,11 +8,11 @@ export default function Footer() {
           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center">
             <Sun className="w-5 h-5 text-white" />
           </div>
-          <span className="text-xl font-bold text-white">FLORIDA CLEAN</span>
+          <span className="text-xl font-bold text-white">Florida SunRinse</span>
         </div>
         <p className="text-white/60 text-sm mb-1">Driveways · Sidewalks · House Washing · Fences</p>
         <p className="text-white/40 text-xs">
-          © {new Date().getFullYear()} Florida Clean. Operated by Multiservicios Elite LLC. All rights reserved.
+          © {new Date().getFullYear()} Florida SunRinse. Operated by Multiservicios Elite LLC. All rights reserved.
         </p>
         <a href="/privacy" className="inline-block mt-3 text-xs text-white/60 underline">Quote request privacy</a>
       </div>
