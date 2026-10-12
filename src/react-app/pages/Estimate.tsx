@@ -55,7 +55,7 @@ function InputField({
 }) {
   return (
     <div>
-      <label htmlFor={field} className="block text-sm font-semibold text-foreground mb-2">{label}</label>
+      <label htmlFor={field} className="block text-sm font-semibold text-foreground mb-2">{label}{field !== "email" && <span aria-hidden="true"> *</span>}</label>
       <div className="relative">
         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none">
           <Icon className="w-4 h-4" />
@@ -266,7 +266,7 @@ export default function EstimatePage() {
             {/* FORM */}
             <form onSubmit={handleSubmit} noValidate aria-label="Request a cleaning quote" aria-busy={state.submitting} className="lg:col-span-2 bg-white rounded-3xl shadow-xl border border-border p-5 sm:p-8 animate-on-scroll">
               <h2 className="text-2xl font-black text-foreground mb-3">Tell Us About Your Property</h2>
-              <p className="text-sm text-muted-foreground mb-8">All fields are required except email and the additional message.</p>
+              <p className="text-sm text-muted-foreground mb-8">* Required fields</p>
 
               {(Object.keys(errors).length > 0 || networkError || state.errors) && <div ref={errorSummary} tabIndex={-1} role="alert" className="mb-6 rounded-xl border border-red-300 bg-red-50 p-4 text-red-800">
                 <p className="font-bold">Your request has not been confirmed.</p>
@@ -322,7 +322,7 @@ export default function EstimatePage() {
               <div className="mb-8">
                 <div className="flex items-center gap-3 mb-5">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-accent to-pink-500 flex items-center justify-center text-white text-sm font-bold">3</div>
-                  <h3 className="font-bold text-foreground text-lg">Services Needed</h3>
+                  <h3 className="font-bold text-foreground text-lg">Services Needed <span aria-hidden="true">*</span></h3>
                 </div>
                 <p className="text-sm text-muted-foreground mb-4">Select all that apply:</p>
                 <div className="grid sm:grid-cols-2 gap-3">
@@ -364,7 +364,7 @@ export default function EstimatePage() {
                 </div>
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-semibold text-foreground mb-3">Property Type</label>
+                    <label className="block text-sm font-semibold text-foreground mb-3">Property Type <span aria-hidden="true">*</span></label>
                     <div className="space-y-2">
                       {PROPERTY_TYPES.map((type) => (
                         <button key={type} type="button"
@@ -380,7 +380,7 @@ export default function EstimatePage() {
 
                   <div className="space-y-6">
                     <div>
-                      <label className="block text-sm font-semibold text-foreground mb-3">Approximate Square Footage</label>
+                      <label className="block text-sm font-semibold text-foreground mb-3">Approximate Square Footage <span aria-hidden="true">*</span></label>
                       <div className="space-y-2">
                         {SQUARE_FOOTAGES.map((size) => (
                           <button key={size} type="button"
@@ -395,7 +395,7 @@ export default function EstimatePage() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-foreground mb-3">How Soon Do You Need This?</label>
+                      <label className="block text-sm font-semibold text-foreground mb-3">How Soon Do You Need This? <span aria-hidden="true">*</span></label>
                       <div className="space-y-2">
                         {URGENCIES.map((urgency) => (
                           <button key={urgency} type="button"
