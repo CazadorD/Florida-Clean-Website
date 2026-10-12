@@ -63,7 +63,7 @@ function InputField({
         <input
           id={field}
           name={field}
-          required
+          required={field !== "email"}
           aria-invalid={!!error}
           type={type}
           value={value}
@@ -80,7 +80,7 @@ function InputField({
 }
 
 // Success screen — separate component, no hooks issues
-function SuccessScreen({ firstName, email }: { firstName: string; email: string }) {
+function SuccessScreen({ firstName, email, phone }: { firstName: string; email: string; phone: string }) {
   const title = useRef<HTMLHeadingElement>(null);
   useEffect(() => { title.current?.focus(); }, []);
   return (
@@ -99,7 +99,7 @@ function SuccessScreen({ firstName, email }: { firstName: string; email: string 
             Request Received! 🎉
           </h1>
           <p className="text-muted-foreground text-lg mb-6 leading-relaxed max-w-md mx-auto">
-            Thank you, <strong className="text-foreground">{firstName}</strong>! Your request was submitted successfully. We will follow up by email at <strong className="text-foreground">{email}</strong> about your project. This is a quote request, not a confirmed booking.
+            Thank you, <strong className="text-foreground">{firstName}</strong>! Your request was submitted successfully. We will follow up {email.trim() ? "by email at" : "by phone at"} <strong className="text-foreground">{email.trim() || phone}</strong> about your project. This is a quote request, not a confirmed booking.
           </p>
 
           {/* What happens next */}
@@ -184,7 +184,7 @@ export default function EstimatePage() {
     const newErrors: Partial<Record<keyof FormData, string>> = {};
     if (!form.firstName.trim()) newErrors.firstName = "Enter your name.";
     if (!form.lastName.trim()) newErrors.lastName = "Enter your last name.";
-    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) newErrors.email = "Enter a valid email address.";
+    if (form.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) newErrors.email = "Enter a valid email address, or leave it blank.";
     if (!/^\+?[\d\s().-]+$/.test(form.phone.trim()) || form.phone.replace(/\D/g, "").length < 10 || form.phone.replace(/\D/g, "").length > 15) newErrors.phone = "Enter a valid phone number.";
     if (!form.address.trim()) newErrors.address = "Enter your street address.";
     if (!form.city.trim()) newErrors.city = "Enter your city.";
@@ -207,7 +207,8 @@ export default function EstimatePage() {
     try {
       await formspreeSubmit({
         name: [form.firstName.trim(), form.lastName.trim()].filter(Boolean).join(" "),
-        email: form.email.trim(), phone: form.phone.trim(), city: form.city.trim(), address: form.address.trim(),
+        ...(form.email.trim() ? { email: form.email.trim() } : {}),
+        phone: form.phone.trim(), city: form.city.trim(), address: form.address.trim(),
         state: "Florida", zipCode: form.zipCode.trim(),
         services: SERVICES.filter(s => form.services.includes(s.id)).map(s => s.label).join(", "),
         propertyType: form.propertyType, squareFootage: form.squareFootage, urgency: form.urgency,
@@ -222,7 +223,7 @@ export default function EstimatePage() {
 
   // Show success screen inline — no routing, stays on same page
   if (submitted) {
-    return <SuccessScreen firstName={form.firstName} email={form.email} />;
+    return <SuccessScreen firstName={form.firstName} email={form.email} phone={form.phone} />;
   }
 
   return (
@@ -265,7 +266,7 @@ export default function EstimatePage() {
             {/* FORM */}
             <form onSubmit={handleSubmit} noValidate aria-label="Request a cleaning quote" aria-busy={state.submitting} className="lg:col-span-2 bg-white rounded-3xl shadow-xl border border-border p-5 sm:p-8 animate-on-scroll">
               <h2 className="text-2xl font-black text-foreground mb-3">Tell Us About Your Property</h2>
-              <p className="text-sm text-muted-foreground mb-8">All fields are required except the additional message.</p>
+              <p className="text-sm text-muted-foreground mb-8">All fields are required except email and the additional message.</p>
 
               {(Object.keys(errors).length > 0 || networkError || state.errors) && <div ref={errorSummary} tabIndex={-1} role="alert" className="mb-6 rounded-xl border border-red-300 bg-red-50 p-4 text-red-800">
                 <p className="font-bold">Your request has not been confirmed.</p>
@@ -284,7 +285,7 @@ export default function EstimatePage() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <InputField label="First Name" field="firstName" placeholder="John" icon={User} value={form.firstName} error={errors.firstName} onChange={handleChange} />
                   <InputField label="Last Name" field="lastName" placeholder="Smith" icon={User} value={form.lastName} error={errors.lastName} onChange={handleChange} />
-                  <InputField label="Email Address" field="email" type="email" placeholder="john@email.com" icon={Mail} value={form.email} error={errors.email} onChange={handleChange} />
+                  <InputField label="Email Address (optional)" field="email" type="email" placeholder="john@email.com" icon={Mail} value={form.email} error={errors.email} onChange={handleChange} />
                   <InputField label="Phone Number" field="phone" type="tel" placeholder="(555) 123-4567" icon={Phone} value={form.phone} error={errors.phone} onChange={handleChange} />
                 </div>
               </div>
