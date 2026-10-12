@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 
 @layer base {
   :root {
@@ -12,9 +12,9 @@
     --card-foreground: 200 35% 15%;
     --popover: 0 0% 100%;
     --popover-foreground: 200 35% 15%;
-    --primary: 175 75% 40%;
+    --primary: 175 75% 28%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 25 95% 58%;
+    --secondary: 25 90% 37%;
     --secondary-foreground: 0 0% 100%;
     --muted: 45 20% 92%;
     --muted-foreground: 200 15% 40%;
@@ -284,4 +284,11 @@ html {
   button, a {
     min-height: 44px;
   }
+}
+
+:focus-visible { outline: 3px solid hsl(var(--primary)); outline-offset: 3px; }
+[id] { scroll-margin-top: 6rem; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .animate-on-scroll, .animate-slide-left, .animate-slide-right, .animate-scale { opacity: 1; transform: none; }
 }
