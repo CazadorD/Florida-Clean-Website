@@ -10,10 +10,11 @@ export default function Footer() {
           </div>
           <span className="text-xl font-bold text-white">FLORIDA CLEAN</span>
         </div>
-        <p className="text-white/60 text-sm mb-1">Proudly serving all of Central Florida</p>
+        <p className="text-white/60 text-sm mb-1">Driveways · Sidewalks · House Washing · Fences</p>
         <p className="text-white/40 text-xs">
-          © {new Date().getFullYear()} Florida Clean Pressure Washing Co. All rights reserved. Fully Licensed & Insured.
+          © {new Date().getFullYear()} Florida Clean. Operated by Multiservicios Elite LLC. All rights reserved.
         </p>
+        <a href="/privacy" className="inline-block mt-3 text-xs text-white/60 underline">Quote request privacy</a>
       </div>
     </footer>
   );

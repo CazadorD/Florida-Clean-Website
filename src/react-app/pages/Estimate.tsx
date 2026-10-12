@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, type FormEvent } from "react";
 import { useForm } from "@formspree/react";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import {
   ArrowRight, Phone, Palmtree, Shield, Clock,
-  CheckCircle2, Star, Home, Truck, Sparkles,
-  Building2, MapPin, User, Mail, MessageSquare, Send,
+  CheckCircle2, Truck, Sparkles, Fence,
+  MapPin, User, Mail, MessageSquare, Send,
 } from "lucide-react";
 import { Button } from "@/react-app/components/ui/button";
+import HeroSun from "@/react-app/components/HeroSun";
 import Navbar from "@/react-app/components/Navbar";
 import Footer from "@/react-app/components/Footer";
 import { useScrollAnimation } from "@/react-app/lib/useScrollAnimation";
@@ -26,13 +27,13 @@ type FormData = {
 };
 
 const SERVICES = [
-  { id: "roof", label: "Roof Cleaning", icon: Home, color: "from-primary to-teal-500" },
+  { id: "sidewalk", label: "Sidewalk Cleaning", icon: Truck, color: "from-primary to-teal-500" },
   { id: "driveway", label: "Driveway & Sidewalk", icon: Truck, color: "from-secondary to-orange-500" },
   { id: "house", label: "House Washing", icon: Sparkles, color: "from-accent to-pink-500" },
-  { id: "commercial", label: "Commercial", icon: Building2, color: "from-violet-500 to-purple-600" },
+  { id: "fence", label: "Fence Cleaning", icon: Fence, color: "from-violet-500 to-purple-600" },
 ];
 
-const PROPERTY_TYPES = ["Single Family Home", "Townhome / Condo", "Multi-Family / Duplex", "Commercial Property", "HOA / Community"];
+const PROPERTY_TYPES = ["Single Family Home", "Townhome / Condo", "Multi-Family / Duplex"];
 const SQUARE_FOOTAGES = ["Under 1,500 sq ft", "1,500–2,500 sq ft", "2,500–4,000 sq ft", "4,000–6,000 sq ft", "6,000+ sq ft"];
 const URGENCIES = ["ASAP (within a week)", "Within 2–4 weeks", "Next month or so", "Just exploring options"];
 
@@ -53,12 +54,15 @@ function InputField({
 }) {
   return (
     <div>
-      <label className="block text-sm font-semibold text-foreground mb-2">{label}</label>
+      <label htmlFor={field} className="block text-sm font-semibold text-foreground mb-2">{label}</label>
       <div className="relative">
         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none">
           <Icon className="w-4 h-4" />
         </div>
         <input
+          id={field}
+          name={field}
+          aria-invalid={!!error}
           type={type}
           value={value}
           onChange={(e) => onChange(field, e.target.value)}
@@ -74,10 +78,13 @@ function InputField({
 }
 
 // Success screen — separate component, no hooks issues
-function SuccessScreen({ firstName, phone }: { firstName: string; phone: string }) {
+function SuccessScreen({ firstName, email }: { firstName: string; email: string }) {
+  const title = useRef<HTMLHeadingElement>(null);
+  useEffect(() => { title.current?.focus(); }, []);
   return (
     <div className="min-h-screen bg-background overflow-hidden">
       <Navbar />
+      <main id="main-content">
       <div className="min-h-screen flex items-center justify-center pt-16 sm:pt-20 px-4">
         <div className="max-w-lg w-full text-center">
 
@@ -86,13 +93,11 @@ function SuccessScreen({ firstName, phone }: { firstName: string; phone: string 
             <CheckCircle2 className="w-12 h-12 text-white" />
           </div>
 
-          <h1 className="text-3xl font-black text-foreground mb-3">
+          <h1 ref={title} tabIndex={-1} className="text-3xl font-black text-foreground mb-3">
             Request Received! 🎉
           </h1>
           <p className="text-muted-foreground text-lg mb-6 leading-relaxed max-w-md mx-auto">
-            Thank you, <strong className="text-foreground">{firstName}</strong>! We've received your estimate request and will call you at{" "}
-            <strong className="text-foreground">{phone}</strong> within{" "}
-            <strong className="text-foreground">24 hours</strong> to give you your free quote.
+            Thank you, <strong className="text-foreground">{firstName}</strong>! Your request was submitted successfully. We will follow up by email at <strong className="text-foreground">{email}</strong> about your project. This is a quote request, not a confirmed booking.
           </p>
 
           {/* What happens next */}
@@ -101,7 +106,7 @@ function SuccessScreen({ firstName, phone }: { firstName: string; phone: string 
             <div className="space-y-4">
               {[
                 { step: "1", title: "We review your request", desc: "Our team looks over your property details and services needed.", color: "from-primary to-teal-500" },
-                { step: "2", title: "We call you", desc: "Expect a call within 24 hours — usually within a few hours — to discuss your project and give you an exact price.", color: "from-secondary to-orange-500" },
+                { step: "2", title: "We follow up", desc: "We may ask for photos, measurements, or a property visit before providing a quote.", color: "from-secondary to-orange-500" },
                 { step: "3", title: "We show up and get it done", desc: "Once you approve the quote, we schedule a time that works for you. No surprises.", color: "from-accent to-pink-500" },
               ].map((item) => (
                 <div key={item.step} className="flex items-start gap-4">
@@ -123,15 +128,10 @@ function SuccessScreen({ firstName, phone }: { firstName: string; phone: string 
                 Back to Home
               </Button>
             </Link>
-            <a href="tel:+15551234567">
-              <Button variant="outline" className="border-2 border-primary text-primary font-bold px-8 rounded-full">
-                <Phone className="mr-2 w-4 h-4" />
-                Call Us Now
-              </Button>
-            </a>
           </div>
         </div>
       </div>
+      </main>
       <Footer />
     </div>
   );
@@ -140,12 +140,16 @@ function SuccessScreen({ firstName, phone }: { firstName: string; phone: string 
 export default function EstimatePage() {
   useScrollAnimation();
 
+  const [params] = useSearchParams();
+  const sending = useRef(false);
+  const errorSummary = useRef<HTMLDivElement>(null);
+  const [networkError, setNetworkError] = useState("");
   const [form, setForm] = useState<FormData>({
     firstName: "", lastName: "", email: "", phone: "",
-    address: "", city: "", services: [],
+    address: "", city: "", services: SERVICES.some(s => s.id === params.get("service")) ? [params.get("service")!] : [],
     propertyType: "", squareFootage: "", urgency: "", message: "",
   });
-  const [state, formspreeSubmit] = useForm(FORMSPREE_ID);
+  const [state, formspreeSubmit, reset] = useForm(FORMSPREE_ID);
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
@@ -155,6 +159,9 @@ export default function EstimatePage() {
     }
   }, [state.succeeded]);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+
+  const serverErrors = state.errors ? [...state.errors.getFormErrors().map(e => e.message), ...state.errors.getAllFieldErrors().flatMap(([field, items]) => items.map(e => `${field}: ${e.message}`))] : [];
+  useEffect(() => { if (Object.keys(errors).length || networkError || state.errors) errorSummary.current?.focus(); }, [errors, networkError, state.errors]);
 
   const handleChange = (field: keyof FormData, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -173,71 +180,65 @@ export default function EstimatePage() {
 
   const validate = () => {
     const newErrors: Partial<Record<keyof FormData, string>> = {};
-    if (!form.firstName.trim()) newErrors.firstName = "Required";
-    if (!form.lastName.trim()) newErrors.lastName = "Required";
-    if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) newErrors.email = "Valid email required";
-    if (!form.phone.trim() || form.phone.replace(/\D/g, "").length < 10) newErrors.phone = "Valid phone required";
-    if (!form.address.trim()) newErrors.address = "Required";
-    if (!form.city.trim()) newErrors.city = "Required";
-    if (form.services.length === 0) newErrors.services = "Select at least one service";
-    if (!form.propertyType) newErrors.propertyType = "Required";
-    if (!form.urgency) newErrors.urgency = "Required";
+    if (!form.firstName.trim()) newErrors.firstName = "Enter your name.";
+    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) newErrors.email = "Enter a valid email address.";
+    if (form.phone.trim() && (!/^\+?[\d\s().-]+$/.test(form.phone.trim()) || form.phone.replace(/\D/g, "").length < 10 || form.phone.replace(/\D/g, "").length > 15)) newErrors.phone = "Enter a valid phone number, or leave it blank.";
+    if (!form.city.trim()) newErrors.city = "Enter your city or ZIP code.";
+    if (form.services.length === 0) newErrors.services = "Choose at least one service.";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (sending.current) return;
+    setNetworkError(""); reset();
     if (!validate()) return;
-    await formspreeSubmit({
-      name: `${form.firstName} ${form.lastName}`,
-      email: form.email,
-      phone: form.phone,
-      address: `${form.address}, ${form.city}, FL`,
-      services: form.services.join(", "),
-      propertyType: form.propertyType,
-      squareFootage: form.squareFootage,
-      urgency: form.urgency,
-      message: form.message || "No additional notes",
-      _subject: `New Estimate Request - ${form.firstName} ${form.lastName} - ${form.city}, FL`,
-    });
-    // state.succeeded is updated by formspree after submission
-    // We check it in the render via useEffect
-
+    const gotcha = String(new FormData(event.currentTarget).get("_gotcha") ?? "");
+    sending.current = true;
+    try {
+      await formspreeSubmit({
+        name: [form.firstName.trim(), form.lastName.trim()].filter(Boolean).join(" "),
+        email: form.email.trim(), phone: form.phone.trim(), city: form.city.trim(), address: form.address.trim(),
+        services: SERVICES.filter(s => form.services.includes(s.id)).map(s => s.label).join(", "),
+        propertyType: form.propertyType, squareFootage: form.squareFootage, urgency: form.urgency,
+        message: form.message.trim(), _gotcha: gotcha,
+        _subject: `Florida Clean estimate — ${form.firstName.trim()} — ${form.city.trim()}`,
+      });
+    } catch {
+      reset();
+      setNetworkError("We couldn't confirm delivery. Your details are still here. Check your connection before trying again.");
+    } finally { sending.current = false; }
   };
 
   // Show success screen inline — no routing, stays on same page
   if (submitted) {
-    return <SuccessScreen firstName={form.firstName} phone={form.phone} />;
+    return <SuccessScreen firstName={form.firstName} email={form.email} />;
   }
 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
       <Navbar />
+      <main id="main-content">
 
       {/* Hero */}
       <section className="relative pt-24 sm:pt-32 pb-16">
         <div className="absolute inset-0 bg-gradient-to-b from-sky-100 via-cyan-50 to-background" />
-        <div className="hidden sm:block absolute top-16 sm:top-20 right-[8%] sm:right-[12%] w-20 h-20 sm:w-28 sm:h-28 bg-gradient-to-br from-yellow-300 to-secondary rounded-full blur-sm opacity-70 animate-float-slow" />
-        <div className="hidden sm:block absolute top-20 sm:top-24 right-[10%] sm:right-[14%] w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-full animate-float" />
+        <HeroSun />
         <div className="hidden sm:block absolute bottom-0 left-10 text-primary/20 animate-float-slow">
           <Palmtree className="w-20 h-20" strokeWidth={1} />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex flex-wrap items-center justify-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white shadow-md border border-primary/20 mb-6 animate-pulse-glow max-w-full text-center">
-            <span className="flex gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-              ))}
-            </span>
             <span className="text-sm font-semibold text-foreground">
-              Free, No-Obligation Quote · 24hr Response
+              Free, No-Obligation Quote
             </span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl font-black text-foreground leading-[1.1] mb-4">
+          <h1 className="hero-title text-4xl sm:text-5xl font-black text-foreground leading-[1.1] mb-4">
             Get Your Free
-            <span className="block bg-gradient-to-r from-primary via-teal-500 to-cyan-500 bg-clip-text text-transparent animate-gradient">
+            <span className="hero-gradient block bg-gradient-to-r from-primary via-teal-500 to-cyan-500 bg-clip-text text-transparent animate-gradient">
               Estimate Today
             </span>
           </h1>
@@ -253,9 +254,17 @@ export default function EstimatePage() {
           <div className="grid lg:grid-cols-3 gap-10 items-start">
 
             {/* FORM */}
-            <div className="lg:col-span-2 bg-white rounded-3xl shadow-xl border border-border p-5 sm:p-8 animate-on-scroll">
+            <form onSubmit={handleSubmit} noValidate aria-label="Request a cleaning quote" aria-busy={state.submitting} className="lg:col-span-2 bg-white rounded-3xl shadow-xl border border-border p-5 sm:p-8 animate-on-scroll">
               <h2 className="text-2xl font-black text-foreground mb-8">Tell Us About Your Property</h2>
 
+              {(Object.keys(errors).length > 0 || networkError || state.errors) && <div ref={errorSummary} tabIndex={-1} role="alert" className="mb-6 rounded-xl border border-red-300 bg-red-50 p-4 text-red-800">
+                <p className="font-bold">Your request has not been confirmed.</p>
+                <ul>{Object.entries(errors).map(([key,message]) => <li key={key}>{message}</li>)}{serverErrors.map((message,i) => <li key={i}>{message}</li>)}</ul>
+                {networkError && <p>{networkError}</p>}
+              </div>}
+              <fieldset disabled={state.submitting}>
+              <legend className="sr-only">Contact and project details</legend>
+              <div hidden><input name="_gotcha" tabIndex={-1} autoComplete="off" aria-label="Leave this empty" /></div>
               {/* Step 1 */}
               <div className="mb-8">
                 <div className="flex items-center gap-3 mb-5">
@@ -264,9 +273,9 @@ export default function EstimatePage() {
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <InputField label="First Name" field="firstName" placeholder="John" icon={User} value={form.firstName} error={errors.firstName} onChange={handleChange} />
-                  <InputField label="Last Name" field="lastName" placeholder="Smith" icon={User} value={form.lastName} error={errors.lastName} onChange={handleChange} />
+                  <InputField label="Last Name (optional)" field="lastName" placeholder="Smith" icon={User} value={form.lastName} error={errors.lastName} onChange={handleChange} />
                   <InputField label="Email Address" field="email" type="email" placeholder="john@email.com" icon={Mail} value={form.email} error={errors.email} onChange={handleChange} />
-                  <InputField label="Phone Number" field="phone" type="tel" placeholder="(555) 123-4567" icon={Phone} value={form.phone} error={errors.phone} onChange={handleChange} />
+                  <InputField label="Phone Number (optional)" field="phone" type="tel" placeholder="(555) 123-4567" icon={Phone} value={form.phone} error={errors.phone} onChange={handleChange} />
                 </div>
               </div>
 
@@ -280,7 +289,7 @@ export default function EstimatePage() {
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="sm:col-span-2">
-                    <InputField label="Street Address" field="address" placeholder="123 Palm Tree Lane" icon={MapPin} value={form.address} error={errors.address} onChange={handleChange} />
+                    <InputField label="Street Address (optional)" field="address" placeholder="123 Palm Tree Lane" icon={MapPin} value={form.address} error={errors.address} onChange={handleChange} />
                   </div>
                   <InputField label="City" field="city" placeholder="Orlando" icon={MapPin} value={form.city} error={errors.city} onChange={handleChange} />
                   <div>
@@ -311,6 +320,9 @@ export default function EstimatePage() {
                       <button
                         key={service.id}
                         type="button"
+                        role="checkbox"
+                        aria-checked={selected}
+                        aria-label={service.label}
                         onClick={() => toggleService(service.id)}
                         className={`flex items-center gap-4 p-4 rounded-2xl border-2 transition-all text-left ${
                           selected ? "border-primary bg-primary/5" : "border-border bg-white hover:border-primary/40"
@@ -401,7 +413,7 @@ export default function EstimatePage() {
                   <div className="absolute left-4 top-4 text-muted-foreground pointer-events-none">
                     <MessageSquare className="w-4 h-4" />
                   </div>
-                  <textarea
+                  <textarea aria-label="Anything else? (optional)"
                     value={form.message}
                     onChange={(e) => setForm((p) => ({ ...p, message: e.target.value }))}
                     placeholder="Describe any specific concerns, stains, or areas you'd like us to pay attention to..."
@@ -412,7 +424,7 @@ export default function EstimatePage() {
               </div>
 
               <Button
-                onClick={handleSubmit}
+                type="submit"
                 disabled={state.submitting}
                 size="lg"
                 className="w-full bg-gradient-to-r from-secondary to-orange-500 hover:from-secondary/90 hover:to-orange-500/90 text-white font-bold text-lg py-6 rounded-2xl shadow-xl shadow-secondary/30 btn-pulse disabled:opacity-70 disabled:cursor-not-allowed"
@@ -433,16 +445,13 @@ export default function EstimatePage() {
                 )}
               </Button>
 
-              {state.errors && Object.keys(state.errors).length > 0 && (
-                <p className="text-center text-sm text-red-500 mt-3 font-medium">
-                  Something went wrong. Please try again or call us at (555) 123-4567.
-                </p>
-              )}
+
 
               <p className="text-center text-xs text-muted-foreground mt-4">
-                By submitting, you agree to be contacted about your estimate. We never sell your information.
+                By submitting, you ask Multiservicios Elite LLC, operator of Florida Clean, to contact you about your estimate. <Link to="/privacy" className="underline">Privacy details</Link>.
               </p>
-            </div>
+              </fieldset>
+            </form>
 
             {/* SIDEBAR */}
             <div className="space-y-6">
@@ -450,10 +459,10 @@ export default function EstimatePage() {
                 <h3 className="font-black text-foreground text-lg mb-5">Why Choose Florida Clean?</h3>
                 <div className="space-y-4">
                   {[
-                    { icon: Clock, label: "24-Hour Response", desc: "We quote same day whenever possible", color: "text-primary", bg: "bg-primary/10" },
-                    { icon: Shield, label: "Fully Insured", desc: "Licensed & insured for your protection", color: "text-secondary", bg: "bg-secondary/10" },
+                    { icon: Clock, label: "Plan Your Project", desc: "Availability confirmed before booking", color: "text-primary", bg: "bg-primary/10" },
+                    { icon: Shield, label: "Surface Assessment", desc: "Material and condition reviewed first", color: "text-secondary", bg: "bg-secondary/10" },
                     { icon: CheckCircle2, label: "No Hidden Fees", desc: "Transparent pricing, no surprises", color: "text-accent", bg: "bg-accent/10" },
-                    { icon: Star, label: "5-Star Rated", desc: "Trusted by hundreds of Florida homeowners", color: "text-yellow-500", bg: "bg-yellow-50" },
+                    { icon: Sparkles, label: "Your Project", desc: "Cleaning matched to the agreed scope", color: "text-yellow-500", bg: "bg-yellow-50" },
                   ].map((item) => (
                     <div key={item.label} className="flex items-start gap-3">
                       <div className={`w-9 h-9 rounded-xl ${item.bg} flex items-center justify-center flex-shrink-0`}>
@@ -468,43 +477,13 @@ export default function EstimatePage() {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-primary/5 to-teal-50 rounded-3xl p-6 border border-primary/20 animate-on-scroll">
-                <div className="flex gap-0.5 mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-foreground text-sm leading-relaxed mb-4 italic">
-                  "Florida Clean did our roof and driveway in one day. The black streaks that had been there for years are completely gone. Fast, professional, and priced fairly."
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center text-white text-sm font-bold">M</div>
-                  <div>
-                    <p className="font-semibold text-foreground text-sm">Maria T.</p>
-                    <p className="text-muted-foreground text-xs">Orlando, FL</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-3xl p-6 shadow-lg border border-border text-center animate-on-scroll">
-                <p className="text-sm text-muted-foreground mb-3">Prefer to talk first?</p>
-                <a href="tel:+15551234567" className="block">
-                  <Button className="w-full bg-gradient-to-r from-primary to-teal-500 text-white font-bold rounded-2xl">
-                    <Phone className="mr-2 w-4 h-4" />
-                    (555) 123-4567
-                  </Button>
-                </a>
-                <p className="text-xs text-muted-foreground mt-3">Mon–Sat, 7am–7pm</p>
-              </div>
-
               <div className="bg-white rounded-3xl p-6 shadow-lg border border-border animate-on-scroll">
                 <p className="text-sm font-semibold text-foreground mb-4">Explore Our Services</p>
                 <div className="space-y-2">
                   {[
-                    { label: "Roof Cleaning", href: "/services/roof-cleaning" },
                     { label: "Driveway & Sidewalk", href: "/services/driveway-sidewalk" },
                     { label: "House Washing", href: "/services/house-washing" },
-                    { label: "Commercial", href: "/services/commercial" },
+                    { label: "Fence Cleaning", href: "/services/fence-cleaning" },
                   ].map((link) => (
                     <Link key={link.label} to={link.href} className="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-muted transition-colors text-sm text-foreground font-medium">
                       {link.label}
@@ -518,6 +497,7 @@ export default function EstimatePage() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
-import { Menu, X, Phone, Sun } from "lucide-react";
+import { Menu, X, Sun } from "lucide-react";
 import { Button } from "@/react-app/components/ui/button";
 
 export default function Navbar() {
@@ -27,15 +27,15 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Roof Cleaning", href: "/services/roof-cleaning" },
     { name: "Driveways", href: "/services/driveway-sidewalk" },
     { name: "House Washing", href: "/services/house-washing" },
-    { name: "Commercial", href: "/services/commercial" },
+    { name: "Fences", href: "/services/fence-cleaning" },
   ];
 
   return (
     <>
-      <nav
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:bg-white focus:p-4">Skip to content</a>
+      <nav aria-label="Main navigation"
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled ? "bg-white shadow-lg" : "bg-white/90 backdrop-blur-sm"
         }`}
@@ -80,15 +80,6 @@ export default function Navbar() {
 
             {/* CTA Buttons */}
             <div className="hidden lg:flex items-center gap-4">
-              <a
-                href="tel:+15551234567"
-                className="flex items-center gap-2 text-sm font-bold text-foreground"
-              >
-                <div className="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center">
-                  <Phone className="w-4 h-4 text-secondary" />
-                </div>
-                (555) 123-4567
-              </a>
               <Link to="/estimate">
                 <Button className="bg-gradient-to-r from-secondary to-orange-500 hover:from-secondary/90 hover:to-orange-500/90 text-white font-bold px-6 rounded-full shadow-lg shadow-secondary/30">
                   Free Quote
@@ -98,6 +89,8 @@ export default function Navbar() {
 
             {/* Mobile Menu Button */}
             <button
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
               onClick={() => setIsOpen(!isOpen)}
               className="lg:hidden p-2 rounded-full text-foreground hover:bg-muted transition-colors"
             >
@@ -124,13 +117,6 @@ export default function Navbar() {
                 </button>
               ))}
               <div className="pt-4 border-t border-border mt-4 space-y-3">
-                <a
-                  href="tel:+15551234567"
-                  className="flex items-center gap-2 px-4 py-2 text-secondary font-bold"
-                >
-                  <Phone className="w-4 h-4" />
-                  (555) 123-4567
-                </a>
                 <Link to="/estimate" onClick={() => setIsOpen(false)}>
                   <Button className="w-full bg-gradient-to-r from-secondary to-orange-500 text-white font-bold rounded-full">
                     Get Free Quote

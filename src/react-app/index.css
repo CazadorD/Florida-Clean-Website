@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-
 @layer base {
   :root {
     --background: 45 30% 97%;
@@ -285,3 +283,10 @@ html {
     min-height: 44px;
   }
 }
+
+/* Preserve original title metrics; extend only the gradient paint area for descenders. */
+h1.hero-title { line-height: 1.1; overflow: visible; }
+h1.hero-title .hero-gradient { padding-bottom: .14em; margin-bottom: -.14em; }
+:focus-visible { outline: 3px solid hsl(var(--primary)); outline-offset: 3px; }
+[id] { scroll-margin-top: 6rem; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } .animate-on-scroll, .animate-slide-left, .animate-slide-right, .animate-scale { opacity: 1; transform: none; } }
