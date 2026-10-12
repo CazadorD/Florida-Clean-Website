@@ -20,7 +20,7 @@
 ## Owner follow-up
 
 - Confirm receipt of `ELITE-1210`; recover/access the Formspree dashboard to verify the notification recipient and domain/spam settings. Do not change the existing destination blindly.
-- Add the owner's actual driveway and sidewalk before/after photos once supplied. Caption these as work at the owner's property, not a customer project or review. No stock or generated work examples are included.
+- Owner photos are now included on the homepage and driveway/sidewalk service pages. The front walkway has a before/after pair; finished driveway and sidewalk images are shown separately. All belong to one project at the owner's property. See `docs/project-photos.md` for source mapping. No stock or generated work examples are included.
 - Choose a final commercial name and check its availability and potential conflicts before using it.
 - Confirm the actual service area. The form currently asks for location and states that availability is confirmed before booking.
 - A dedicated business telephone may be added later. Do not use the owner's personal or insurance-business number.

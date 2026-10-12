@@ -3,6 +3,7 @@ import { ArrowRight, Droplets, MapPin, MessageSquare, Sun } from "lucide-react";
 import Navbar from "@/react-app/components/Navbar";
 import Footer from "@/react-app/components/Footer";
 import HeroSun from "@/react-app/components/HeroSun";
+import ProjectGallery from "@/react-app/components/ProjectGallery";
 import { SERVICES } from "@/react-app/lib/business";
 
 export default function HomePage() {
@@ -26,7 +27,8 @@ export default function HomePage() {
       <p className="font-semibold text-primary">OUR SERVICES</p><h2 className="mt-2 text-3xl font-black sm:text-4xl">Care for the spaces you use every day.</h2>
       <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{SERVICES.map(service => <article key={service.id} className="flex flex-col rounded-3xl border border-border bg-white p-6"><h3 className="text-xl font-bold">{service.name}</h3><p className="mb-6 mt-3 flex-1 leading-relaxed text-muted-foreground">{service.description}</p><Link to={service.path} className="inline-flex items-center gap-2 font-semibold text-primary">View service <ArrowRight aria-hidden="true" className="h-4 w-4" /></Link></article>)}</div>
     </section>
-    <section className="bg-primary/5 py-16"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><h2 className="text-3xl font-black">A straightforward way to get started.</h2>
+    <ProjectGallery />
+    <section className="py-16"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><h2 className="text-3xl font-black">A straightforward way to get started.</h2>
       <div className="mt-10 grid gap-8 md:grid-cols-3">{[
         { icon: MessageSquare, title: "Tell us what you need", description: "Choose your surfaces and share your city or ZIP code through the quote form." },
         { icon: MapPin, title: "We review the details", description: "We confirm the service area and may ask for photos, measurements, or a property visit." },
