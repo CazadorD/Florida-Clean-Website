@@ -46,7 +46,7 @@ export default function HomePage() {
             {/* Left Content */}
             <div>
               <div className="inline-flex flex-wrap items-center justify-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-white shadow-md border border-primary/20 mb-6 animate-pulse-glow max-w-full text-center">
-                <span className="text-sm font-semibold text-foreground">Exterior Cleaning in Florida</span>
+                <span className="text-sm font-semibold text-foreground">Serving Tampa · Riverview · Brandon</span>
               </div>
 
               <h1 className="hero-title text-4xl sm:text-5xl lg:text-6xl font-black text-foreground leading-[1.1] mb-6">
@@ -57,8 +57,8 @@ export default function HomePage() {
               </h1>
 
               <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-lg">
-                Pressure washing for driveways, sidewalks, house exteriors, and fences.
-                Share your location and the surfaces you need cleaned to request a free quote.
+                Pressure washing for driveways, sidewalks, house exteriors, and fences in Tampa, Riverview, and Brandon.
+                Tell us what needs cleaning and get a free, no-obligation quote.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-10">
@@ -75,7 +75,7 @@ export default function HomePage() {
 
               <div className="flex flex-wrap gap-6">
                 {[
-                  { icon: Shield, label: "Surface Assessment", color: "bg-primary/10", iconColor: "text-primary" },
+                  { icon: Shield, label: "Local & Reliable", color: "bg-primary/10", iconColor: "text-primary" },
                   { icon: Zap, label: "Free Quotes", color: "bg-secondary/10", iconColor: "text-secondary" },
                   { icon: Clock, label: "Flexible Scheduling", color: "bg-accent/10", iconColor: "text-accent" },
                 ].map((item) => (
@@ -102,7 +102,7 @@ export default function HomePage() {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-foreground">Exterior Cleaning</h3>
-                      <p className="text-sm text-muted-foreground">Scope agreed before work begins</p>
+                      <p className="text-sm text-muted-foreground">Clear pricing, no surprises</p>
                     </div>
                   </div>
 
@@ -142,19 +142,19 @@ export default function HomePage() {
               How We Work
             </span>
             <h2 className="text-3xl lg:text-4xl font-black text-foreground mb-4">
-              Professional Service, <span className="text-primary">Careful Planning</span>
+              Professional Service, <span className="text-primary">Real Results</span>
             </h2>
             <p className="text-muted-foreground text-lg">
-              We understand Florida properties face unique challenges: humidity, storms, and relentless sun.
-              We assess the surfaces and discuss the scope before work begins.
+              Florida humidity, storms, and sun leave mold, mildew, and grime behind.
+              We bring your surfaces back to life with the right method for each one.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-y-10 sm:gap-y-8 gap-x-8">
             {[
-              { icon: Clock, title: "Plan Your Visit", desc: "We discuss access, your location, and scheduling before confirming the work.", color: "from-primary to-teal-500" },
-              { icon: Sparkles, title: "Surface Assessment", desc: "The cleaning approach depends on your surface, its finish, and its condition.", color: "from-secondary to-orange-500" },
-              { icon: Shield, title: "Clear Scope", desc: "We agree on the scope and price with you before any work begins.", color: "from-accent to-pink-500" },
+              { icon: Clock, title: "Easy Scheduling", desc: "We work around your schedule across Tampa, Riverview, and Brandon.", color: "from-primary to-teal-500" },
+              { icon: Sparkles, title: "The Right Method", desc: "Pressure or soft washing chosen for each surface, so it gets clean without damage.", color: "from-secondary to-orange-500" },
+              { icon: Shield, title: "Clear Scope", desc: "You know the price up front. No hidden fees, no surprises.", color: "from-accent to-pink-500" },
             ].map((card) => (
               <div key={card.title} className="animate-on-scroll group relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-transparent hover:border-primary/20 card-lift">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -184,16 +184,16 @@ export default function HomePage() {
               Complete Cleaning <span className="text-secondary">Solutions</span>
             </h2>
             <p className="text-muted-foreground text-lg">
-              Driveways, sidewalks, house washing, siding, and fences.
+              Driveways, sidewalks, house siding, and fences — cleaned the right way.
             </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: Truck, title: "Sidewalk Cleaning", desc: "Cleaning for sidewalks and walking paths", color: "from-primary to-teal-500", href: "/services/sidewalk-cleaning" },
-              { icon: Truck, title: "Driveways", desc: "Cleaning for dirt and organic buildup on driveways", color: "from-secondary to-orange-500", href: "/services/driveway-sidewalk" },
-              { icon: Sparkles, title: "House Washing", desc: "House washing suited to the exterior material and condition", color: "from-accent to-pink-500", href: "/services/house-washing" },
-              { icon: Fence, title: "Fence Cleaning", desc: "Cleaning suited to your fence material and finish", color: "from-violet-500 to-purple-600", href: "/services/fence-cleaning" },
+              { icon: Truck, title: "Sidewalk Cleaning", desc: "Remove dirt, mold, and dark buildup from sidewalks and walkways", color: "from-primary to-teal-500", href: "/services/sidewalk-cleaning" },
+              { icon: Truck, title: "Driveways", desc: "Make your driveway look like new and boost curb appeal", color: "from-secondary to-orange-500", href: "/services/driveway-cleaning" },
+              { icon: Sparkles, title: "House Washing", desc: "Gentle exterior washing that removes mildew and grime from siding", color: "from-accent to-pink-500", href: "/services/house-washing" },
+              { icon: Fence, title: "Fence Cleaning", desc: "Bring back the original look of your fence", color: "from-violet-500 to-purple-600", href: "/services/fence-cleaning" },
             ].map((service) => (
               <Link
                 key={service.title}
@@ -233,8 +233,8 @@ export default function HomePage() {
             Ready for a Cleaner Property?
           </h2>
           <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
-            Get your free, no-obligation quote. We'll assess your property
-            and provide transparent pricing with no surprises, no hidden fees.
+            Get your free, no-obligation quote today. Serving Tampa, Riverview, and Brandon
+            with transparent pricing — no surprises, no hidden fees.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/estimate">
