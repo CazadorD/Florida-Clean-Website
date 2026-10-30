@@ -19,8 +19,7 @@ function ProjectPhoto({ name, alt, label, landscape = false, compact = false }: 
 export default function ProjectGallery({ service }: { service?: "driveway" | "sidewalk" }) {
   return <section id="real-project" aria-labelledby="project-heading" className="bg-primary/5 py-16 sm:py-20">
     <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-      <p className="text-sm font-bold tracking-widest text-primary">A REAL PROJECT</p>
-      <h2 id="project-heading" className="mt-3 text-3xl font-black sm:text-4xl">Real results, right here in Tampa Bay.</h2>
+      <h2 id="project-heading" className="text-3xl font-black sm:text-4xl">Real results, right here in Tampa Bay.</h2>
       <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">Before-and-after photos from a recent driveway and walkway job.</p>
       <p className="mt-2 max-w-2xl text-sm italic text-muted-foreground">Results vary with the surface and type of staining.</p>
       <div className="mt-9">
