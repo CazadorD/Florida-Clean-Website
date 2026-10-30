@@ -22,6 +22,7 @@ export default function ProjectGallery({ service }: { service?: "driveway" | "si
       <p className="text-sm font-bold tracking-widest text-primary">A REAL PROJECT</p>
       <h2 id="project-heading" className="mt-3 text-3xl font-black sm:text-4xl">Real results, right here in Tampa Bay.</h2>
       <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">Before-and-after photos from a recent driveway and walkway job.</p>
+      <p className="mt-2 max-w-2xl text-sm italic text-muted-foreground">Results vary with the surface and type of staining.</p>
       <div className="mt-9">
         <h3 className="mb-4 text-xl font-bold">Driveway: before and after</h3>
         <div className="grid gap-5 sm:grid-cols-2">
@@ -44,7 +45,6 @@ export default function ProjectGallery({ service }: { service?: "driveway" | "si
           <ProjectPhoto name="sidewalk-after" compact alt="Cleaned sidewalk beside a freshly cleaned driveway" label="After · Sidewalk" />
         </div>
       </div>
-      <p className="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground">Results vary with the surface and type of staining.</p>
     </div>
   </section>;
 }
