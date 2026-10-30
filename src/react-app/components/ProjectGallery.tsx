@@ -44,7 +44,7 @@ export default function ProjectGallery({ service }: { service?: "driveway" | "si
           <ProjectPhoto name="sidewalk-after" compact alt="Cleaned sidewalk beside the owner's driveway" label="After · Sidewalk" />
         </div>
       </div>
-      <p className="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground">Results vary with the surface and type of staining. This example shows work at the owner's home.</p>
+      <p className="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground">Results vary with the surface and type of staining.</p>
     </div>
   </section>;
 }
