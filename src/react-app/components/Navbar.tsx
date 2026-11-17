@@ -79,8 +79,8 @@ export default function Navbar() {
 
             {/* CTA Buttons */}
             <div className="hidden lg:flex items-center gap-4">
-              <a href={BUSINESS.phoneHref} className="inline-flex items-center gap-2 font-bold text-foreground hover:text-primary transition-colors">
-                <Phone aria-hidden="true" className="w-4 h-4 text-primary" />
+              <a href={BUSINESS.phoneHref} className="inline-flex items-center gap-2 text-xl font-extrabold text-foreground hover:text-primary transition-colors">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10"><Phone aria-hidden="true" className="w-5 h-5 text-primary" /></span>
                 {BUSINESS.phone}
               </a>
               <Link to="/estimate">
@@ -120,7 +120,7 @@ export default function Navbar() {
                 </button>
               ))}
               <div className="pt-4 border-t border-border mt-4 space-y-3">
-                <a href={BUSINESS.phoneHref} className="flex w-full items-center justify-center gap-2 rounded-full border-2 border-primary py-2.5 font-bold text-primary">
+                <a href={BUSINESS.phoneHref} className="flex w-full items-center justify-center gap-2 rounded-full border-2 border-primary py-3 text-lg font-extrabold text-primary">
                   <Phone aria-hidden="true" className="w-4 h-4" />
                   Call {BUSINESS.phone}
                 </a>
@@ -137,8 +137,8 @@ export default function Navbar() {
 
       {/* Mobile call / text bar */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 grid grid-cols-2 gap-2 border-t border-border bg-white/95 px-3 pt-2 backdrop-blur" style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}>
-        <a href={BUSINESS.phoneHref} className="flex items-center justify-center gap-2 rounded-full bg-primary py-3 font-bold text-white">
-          <Phone aria-hidden="true" className="w-4 h-4" /> Call
+        <a href={BUSINESS.phoneHref} className="flex items-center justify-center gap-2 rounded-full bg-primary py-3 text-lg font-extrabold text-white">
+          <Phone aria-hidden="true" className="w-5 h-5" /> Call
         </a>
         <a href={BUSINESS.smsHref} className="flex items-center justify-center gap-2 rounded-full bg-secondary py-3 font-bold text-white">
           <MessageSquare aria-hidden="true" className="w-4 h-4" /> Text

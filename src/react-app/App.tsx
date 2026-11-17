@@ -5,6 +5,7 @@ import HouseWashingPage from "@/react-app/pages/HouseWashing";
 import FenceCleaningPage from "@/react-app/pages/FenceCleaning";
 import EstimatePage from "@/react-app/pages/Estimate";
 import Privacy from "@/react-app/pages/Privacy";
+import Terms from "@/react-app/pages/Terms";
 import Unavailable from "@/react-app/pages/Unavailable";
 import ScrollToTop from "@/react-app/components/ScrollToTop";
 import ServicePage from "@/react-app/pages/ServicePage";
@@ -22,6 +23,7 @@ export default function App() {
   <Route path="/services/concrete-sealing" element={<ServicePage service={sealing} />} />
   <Route path="/estimate" element={<EstimatePage />} />
   <Route path="/privacy" element={<Privacy />} />
+  <Route path="/terms" element={<Terms />} />
   <Route path="*" element={<Unavailable />} />
  </Routes></Router>;
 }

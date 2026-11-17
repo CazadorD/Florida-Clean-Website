@@ -257,9 +257,9 @@ export default function EstimatePage() {
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
             Fill out the form below and we'll get you a transparent, no-surprise quote fast.
           </p>
-          <p className="mt-4 text-base text-foreground">
+          <p className="mt-5 text-lg text-foreground">
             Prefer to talk?{" "}
-            <a href={BUSINESS.phoneHref} className="font-bold text-primary underline-offset-4 hover:underline">Call or text {BUSINESS.phone}</a>
+            <a href={BUSINESS.phoneHref} className="text-2xl font-extrabold text-primary underline-offset-4 hover:underline whitespace-nowrap">Call or text {BUSINESS.phone}</a>
           </p>
         </div>
       </section>

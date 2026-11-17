@@ -10,14 +10,14 @@ export default function Footer() {
           <LogoMark className="w-10 h-10" />
           <span className="text-xl font-bold text-white">Florida SunRinse</span>
         </div>
-        <a href={BUSINESS.phoneHref} className="mb-3 inline-flex items-center gap-2 text-lg font-bold text-white hover:text-primary">
-          <Phone aria-hidden="true" className="w-4 h-4" /> {BUSINESS.phone}
+        <a href={BUSINESS.phoneHref} className="mb-3 inline-flex items-center gap-2 text-2xl font-extrabold text-white hover:text-primary">
+          <Phone aria-hidden="true" className="w-6 h-6" /> {BUSINESS.phone}
         </a>
         <p className="text-white/60 text-sm mb-1">Driveways · Sidewalks · House Washing · Fences · Concrete Sealing</p>
         <p className="text-white/40 text-xs">
           © {new Date().getFullYear()} Florida SunRinse. Operated by Multiservicios Elite LLC. All rights reserved.
         </p>
-        <a href="/privacy" className="inline-block mt-3 text-xs text-white/60 underline">Quote request privacy</a>
+        <div className="mt-3 flex justify-center gap-4 text-xs text-white/60"><a href="/privacy" className="underline">Privacy</a><a href="/terms" className="underline">Terms of Service</a></div>
       </div>
     </footer>
   );
