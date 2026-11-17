@@ -119,13 +119,13 @@ export default function Navbar() {
                   {link.name}
                 </button>
               ))}
-              <div className="pt-4 border-t border-border mt-4 space-y-3">
-                <a href={BUSINESS.phoneHref} className="flex w-full items-center justify-center gap-2 rounded-full border-2 border-primary py-3 text-lg font-extrabold text-primary">
-                  <Phone aria-hidden="true" className="w-4 h-4" />
+              <div className="pt-4 border-t border-border mt-4 flex flex-col gap-3">
+                <a href={BUSINESS.phoneHref} className="flex w-full items-center justify-center gap-2 rounded-full border-2 border-primary h-12 text-lg font-extrabold text-primary">
+                  <Phone aria-hidden="true" className="w-5 h-5" />
                   Call {BUSINESS.phone}
                 </a>
-                <Link to="/estimate" onClick={() => setIsOpen(false)}>
-                  <Button className="w-full bg-gradient-to-r from-secondary to-orange-500 text-white font-bold rounded-full">
+                <Link to="/estimate" onClick={() => setIsOpen(false)} className="block">
+                  <Button className="w-full h-12 text-lg bg-gradient-to-r from-secondary to-orange-500 text-white font-bold rounded-full">
                     Get Free Quote
                   </Button>
                 </Link>

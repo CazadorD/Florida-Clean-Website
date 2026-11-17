@@ -21,7 +21,7 @@ export default function HomePage() {
       <main id="main-content">
 
       {/* Hero Section */}
-      <section className="relative min-h-[auto] sm:min-h-screen flex items-center pt-16 sm:pt-20 pb-12 sm:pb-0">
+      <section className="relative min-h-[auto] sm:min-h-screen flex items-center pt-16 sm:pt-20 pb-8 sm:pb-0">
         <div className="absolute inset-0 bg-gradient-to-b from-sky-100 via-cyan-50 to-background" />
 
         {/* Animated sun */}
@@ -42,7 +42,7 @@ export default function HomePage() {
           <Palmtree className="hidden md:block w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24" strokeWidth={1} />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6 sm:py-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
             <div>
@@ -78,7 +78,7 @@ export default function HomePage() {
                 </a>
               </div>
 
-              <div className="flex flex-wrap gap-6">
+              <div className="flex flex-wrap gap-x-6 gap-y-3">
                 {[
                   { icon: Shield, label: "Local & Reliable", color: "bg-primary/10", iconColor: "text-primary" },
                   { icon: Zap, label: "Free Quotes", color: "bg-secondary/10", iconColor: "text-secondary" },
@@ -139,9 +139,9 @@ export default function HomePage() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-24 bg-background relative">
+      <section className="py-14 sm:py-24 bg-background relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16 animate-on-scroll">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-4">
               <Sun className="w-4 h-4" />
               How We Work
@@ -178,10 +178,10 @@ export default function HomePage() {
       </section>
 
       {/* Services */}
-      <section className="py-24 relative overflow-hidden">
+      <section className="py-14 sm:py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16 animate-on-scroll">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary font-semibold text-sm mb-4">
               Our Services
             </span>
