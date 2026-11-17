@@ -4,8 +4,9 @@ import { Link, useSearchParams } from "react-router";
 import {
   ArrowRight, Phone, Palmtree, Shield, Clock,
   CheckCircle2, Truck, Sparkles, Fence,
-  MapPin, User, Mail, MessageSquare, Send,
+  MapPin, User, Mail, MessageSquare, Send, ShieldCheck,
 } from "lucide-react";
+import { BUSINESS } from "@/react-app/lib/business";
 import { Button } from "@/react-app/components/ui/button";
 import HeroSun from "@/react-app/components/HeroSun";
 import Navbar from "@/react-app/components/Navbar";
@@ -28,10 +29,11 @@ type FormData = {
 };
 
 const SERVICES = [
+  { id: "driveway", label: "Driveway Cleaning", icon: Truck, color: "from-secondary to-orange-500" },
   { id: "sidewalk", label: "Sidewalk Cleaning", icon: Truck, color: "from-primary to-teal-500" },
-  { id: "driveway", label: "Driveway & Sidewalk", icon: Truck, color: "from-secondary to-orange-500" },
   { id: "house", label: "House Washing", icon: Sparkles, color: "from-accent to-pink-500" },
   { id: "fence", label: "Fence Cleaning", icon: Fence, color: "from-violet-500 to-purple-600" },
+  { id: "sealing", label: "Concrete Sealing", icon: ShieldCheck, color: "from-teal-600 to-cyan-600" },
 ];
 
 const PROPERTY_TYPES = ["Single Family Home", "Townhome / Condo", "Multi-Family / Duplex"];
@@ -254,6 +256,10 @@ export default function EstimatePage() {
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
             Fill out the form below and we'll get you a transparent, no-surprise quote fast.
+          </p>
+          <p className="mt-4 text-base text-foreground">
+            Prefer to talk?{" "}
+            <a href={BUSINESS.phoneHref} className="font-bold text-primary underline-offset-4 hover:underline">Call or text {BUSINESS.phone}</a>
           </p>
         </div>
       </section>
@@ -495,6 +501,7 @@ export default function EstimatePage() {
                 <div className="space-y-2">
                   {[
                     { label: "Driveway & Sidewalk", href: "/services/driveway-sidewalk" },
+                    { label: "Concrete Sealing", href: "/services/concrete-sealing" },
                     { label: "House Washing", href: "/services/house-washing" },
                     { label: "Fence Cleaning", href: "/services/fence-cleaning" },
                   ].map((link) => (

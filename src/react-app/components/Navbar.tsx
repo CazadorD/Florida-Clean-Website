@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
-import { Menu, X, Sun } from "lucide-react";
+import { Menu, X, Sun, Phone, MessageSquare } from "lucide-react";
+import { BUSINESS } from "@/react-app/lib/business";
 import { Button } from "@/react-app/components/ui/button";
 
 export default function Navbar() {
@@ -80,6 +81,10 @@ export default function Navbar() {
 
             {/* CTA Buttons */}
             <div className="hidden lg:flex items-center gap-4">
+              <a href={BUSINESS.phoneHref} className="inline-flex items-center gap-2 font-bold text-foreground hover:text-primary transition-colors">
+                <Phone aria-hidden="true" className="w-4 h-4 text-primary" />
+                {BUSINESS.phone}
+              </a>
               <Link to="/estimate">
                 <Button className="bg-gradient-to-r from-secondary to-orange-500 hover:from-secondary/90 hover:to-orange-500/90 text-white font-bold px-6 rounded-full shadow-lg shadow-secondary/30">
                   Free Quote
@@ -117,6 +122,10 @@ export default function Navbar() {
                 </button>
               ))}
               <div className="pt-4 border-t border-border mt-4 space-y-3">
+                <a href={BUSINESS.phoneHref} className="flex w-full items-center justify-center gap-2 rounded-full border-2 border-primary py-2.5 font-bold text-primary">
+                  <Phone aria-hidden="true" className="w-4 h-4" />
+                  Call {BUSINESS.phone}
+                </a>
                 <Link to="/estimate" onClick={() => setIsOpen(false)}>
                   <Button className="w-full bg-gradient-to-r from-secondary to-orange-500 text-white font-bold rounded-full">
                     Get Free Quote
@@ -127,6 +136,16 @@ export default function Navbar() {
           </div>
         )}
       </nav>
+
+      {/* Mobile call / text bar */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 grid grid-cols-2 gap-2 border-t border-border bg-white/95 px-3 pt-2 backdrop-blur" style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}>
+        <a href={BUSINESS.phoneHref} className="flex items-center justify-center gap-2 rounded-full bg-primary py-3 font-bold text-white">
+          <Phone aria-hidden="true" className="w-4 h-4" /> Call
+        </a>
+        <a href={BUSINESS.smsHref} className="flex items-center justify-center gap-2 rounded-full bg-secondary py-3 font-bold text-white">
+          <MessageSquare aria-hidden="true" className="w-4 h-4" /> Text
+        </a>
+      </div>
 
       {/* Back to Top Button */}
       <ScrollToTopButton />
@@ -149,7 +168,7 @@ function ScrollToTopButton() {
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="Back to top"
-      className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-gradient-to-br from-primary to-teal-500 text-white shadow-xl shadow-primary/30 flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200"
+      className="fixed bottom-24 lg:bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-gradient-to-br from-primary to-teal-500 text-white shadow-xl shadow-primary/30 flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200"
     >
       <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M18 15l-6-6-6 6" />

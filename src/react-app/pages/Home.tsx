@@ -1,8 +1,9 @@
 import { Link } from "react-router";
 import {
   Clock, Shield, Zap, ArrowRight, Truck,
-  Fence, Sparkles, Sun, Palmtree, Waves, CheckCircle2,
+  Fence, Sparkles, Sun, Palmtree, Waves, CheckCircle2, Phone, ShieldCheck,
 } from "lucide-react";
+import { BUSINESS } from "@/react-app/lib/business";
 import ProjectGallery from "@/react-app/components/ProjectGallery";
 import Footer from "@/react-app/components/Footer";
 import { Button } from "@/react-app/components/ui/button";
@@ -71,6 +72,10 @@ export default function HomePage() {
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                 </Link>
+                <a href={BUSINESS.phoneHref} className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary bg-white px-8 py-4 text-lg font-bold text-primary hover:bg-primary/5 transition-colors">
+                  <Phone aria-hidden="true" className="w-5 h-5" />
+                  {BUSINESS.phone}
+                </a>
               </div>
 
               <div className="flex flex-wrap gap-6">
@@ -184,7 +189,7 @@ export default function HomePage() {
               Complete Cleaning <span className="text-secondary">Solutions</span>
             </h2>
             <p className="text-muted-foreground text-lg">
-              Driveways, sidewalks, house siding, and fences — cleaned the right way.
+              Driveways, sidewalks, house siding, and fences — cleaned the right way, with sealing to keep concrete clean longer.
             </p>
           </div>
 
@@ -211,6 +216,23 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
+
+          <Link
+            to="/services/concrete-sealing"
+            className="animate-on-scroll group mt-6 flex flex-col sm:flex-row sm:items-center gap-5 rounded-2xl border border-primary/20 bg-gradient-to-r from-primary/5 to-cyan-50 p-6 hover:shadow-lg transition-all"
+          >
+            <div className="w-14 h-14 shrink-0 rounded-2xl bg-gradient-to-br from-teal-600 to-cyan-600 flex items-center justify-center">
+              <ShieldCheck className="w-7 h-7 text-white" />
+            </div>
+            <div className="flex-1">
+              <p className="text-xs font-bold uppercase tracking-wider text-primary">Add-on after cleaning</p>
+              <h3 className="text-lg font-bold text-foreground">Concrete Sealing</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">A penetrating sealer helps your clean driveway repel water and new stains, with a natural, non-glossy look.</p>
+            </div>
+            <span className="inline-flex items-center text-primary font-semibold text-sm group-hover:gap-2 transition-all">
+              Learn More <ArrowRight className="w-4 h-4 ml-1" />
+            </span>
+          </Link>
         </div>
       </section>
 

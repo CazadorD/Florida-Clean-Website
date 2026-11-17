@@ -20,7 +20,7 @@ async function fillRequired(page: Page) {
   await page.getByRole('button', { name: 'Single Family Home', exact: true }).click();
   await page.getByRole('button', { name: 'Under 1,500 sq ft', exact: true }).click();
   await page.getByRole('button', { name: 'Within 2–4 weeks', exact: true }).click();
-  await page.getByLabel('Driveway & Sidewalk', { exact: true }).check();
+  await page.getByLabel('Driveway Cleaning', { exact: true }).check();
 }
 
 test('validates required fields and preserves entered values without sending', async ({ page }) => {
@@ -64,7 +64,7 @@ test('Enter sends every required detail and optional message once, waits for acc
   release();
   await expect(page.getByRole('heading', { name: 'Request Received! 🎉' })).toBeFocused();
   expect(requests).toBe(1);
-  expect(body).toMatchObject({ name: 'Test Owner Example', email: 'test@example.com', city: 'Riverview', state: 'Florida', zipCode: '33578', services: 'Driveway & Sidewalk, Fence Cleaning', phone: '(202) 555-0100', address: 'Test address', propertyType: 'Single Family Home', squareFootage: 'Under 1,500 sq ft', urgency: 'Within 2–4 weeks', message: 'Both sides of fence.', _gotcha: '' });
+  expect(body).toMatchObject({ name: 'Test Owner Example', email: 'test@example.com', city: 'Riverview', state: 'Florida', zipCode: '33578', services: 'Driveway Cleaning, Fence Cleaning', phone: '(202) 555-0100', address: 'Test address', propertyType: 'Single Family Home', squareFootage: 'Under 1,500 sq ft', urgency: 'Within 2–4 weeks', message: 'Both sides of fence.', _gotcha: '' });
 });
 
 test('optional email can be omitted and confirmation uses the required phone', async ({ page }) => {
@@ -145,7 +145,10 @@ test('phone and ZIP reject blank or invalid values; ZIP+4 and empty message are 
 test('mobile menu, service selection, and retired URLs match current scope', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
-  await expect(page.locator('a[href^="tel:"]')).toHaveCount(0);
+  const telLinks = page.locator('a[href^="tel:"]');
+  expect(await telLinks.count()).toBeGreaterThan(0);
+  for (const href of await telLinks.evaluateAll(els => els.map(e => e.getAttribute('href')))) expect(href).toBe('tel:+18133047815');
+  await expect(page.locator('a[href="sms:+18133047815"]').first()).toBeVisible();
   await expect(page.locator('body')).not.toContainText(/Maria T|10\+|Fully Insured|5-Star/);
   await page.getByRole('button', { name: 'Open menu' }).click();
   await page.getByRole('navigation').getByRole('button', { name: 'Fences', exact: true }).click();
@@ -161,6 +164,8 @@ test('mobile menu, service selection, and retired URLs match current scope', asy
   await expect(page.getByRole('heading', { name: 'House Washing & Exterior Cleaning' })).toBeVisible();
   await page.goto('/services/driveway-sidewalk');
   await expect(page.getByRole('heading', { name: 'Driveway & Sidewalk Pressure Washing' })).toBeVisible();
+  await page.goto('/services/concrete-sealing');
+  await expect(page.getByRole('heading', { name: /Concrete Sealing/ }).first()).toBeVisible();
   await page.goto('/does-not-exist');
   await expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible();
 });

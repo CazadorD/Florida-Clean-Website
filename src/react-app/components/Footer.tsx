@@ -1,8 +1,9 @@
-import { Sun } from "lucide-react";
+import { Sun, Phone } from "lucide-react";
+import { BUSINESS } from "@/react-app/lib/business";
 
 export default function Footer() {
   return (
-    <footer className="bg-foreground py-12 text-center">
+    <footer className="bg-foreground pt-12 pb-28 lg:pb-12 text-center">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-center gap-3 mb-4">
           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center">
@@ -10,7 +11,10 @@ export default function Footer() {
           </div>
           <span className="text-xl font-bold text-white">Florida SunRinse</span>
         </div>
-        <p className="text-white/60 text-sm mb-1">Driveways · Sidewalks · House Washing · Fences</p>
+        <a href={BUSINESS.phoneHref} className="mb-3 inline-flex items-center gap-2 text-lg font-bold text-white hover:text-primary">
+          <Phone aria-hidden="true" className="w-4 h-4" /> {BUSINESS.phone}
+        </a>
+        <p className="text-white/60 text-sm mb-1">Driveways · Sidewalks · House Washing · Fences · Concrete Sealing</p>
         <p className="text-white/40 text-xs">
           © {new Date().getFullYear()} Florida SunRinse. Operated by Multiservicios Elite LLC. All rights reserved.
         </p>
