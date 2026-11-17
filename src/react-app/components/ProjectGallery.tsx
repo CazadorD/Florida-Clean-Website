@@ -1,5 +1,4 @@
-import { Link } from "react-router";
-import { ArrowRight, Camera } from "lucide-react";
+import { Camera } from "lucide-react";
 
 type Shot = { name: string; alt: string };
 type Project = { title: string; before?: Shot; after: Shot };
@@ -48,11 +47,6 @@ export default function ProjectGallery({ service }: { service?: "driveway" | "si
         {projects.map((p) => <ProjectCard key={p.title} project={p} />)}
       </div>
       <p className="mt-6 text-center text-sm italic text-muted-foreground">Results vary with the surface and type of staining.</p>
-      <div className="mt-8 flex justify-center">
-        <Link to="/estimate" className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-secondary to-orange-500 px-8 py-3 font-bold text-white shadow-lg shadow-secondary/30 transition-opacity hover:opacity-90">
-          Get Your Free Quote <ArrowRight className="h-5 w-5" aria-hidden="true" />
-        </Link>
-      </div>
     </div>
   </section>;
 }

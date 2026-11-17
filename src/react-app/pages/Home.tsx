@@ -265,6 +265,10 @@ export default function HomePage() {
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
+            <a href={BUSINESS.phoneHref} className="inline-flex h-10 items-center justify-center gap-2 rounded-full border-2 border-white px-8 text-sm font-bold text-white hover:bg-white/10 transition-colors">
+              <Phone aria-hidden="true" className="w-5 h-5" />
+              Call {BUSINESS.phone}
+            </a>
           </div>
         </div>
       </section>

@@ -9,7 +9,9 @@ import {
   Zap,
   Truck,
   Droplets,
+  Phone,
 } from "lucide-react";
+import { BUSINESS } from "@/react-app/lib/business";
 import ProjectGallery from "@/react-app/components/ProjectGallery";
 import { Button } from "@/react-app/components/ui/button";
 import HeroSun from "@/react-app/components/HeroSun";
@@ -239,6 +241,10 @@ export default function DrivewayPage() {
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
+            <a href={BUSINESS.phoneHref} className="inline-flex h-10 items-center justify-center gap-2 rounded-full border-2 border-white px-8 text-sm font-bold text-white hover:bg-white/10 transition-colors">
+              <Phone aria-hidden="true" className="w-5 h-5" />
+              Call {BUSINESS.phone}
+            </a>
           </div>
         </div>
       </section>
