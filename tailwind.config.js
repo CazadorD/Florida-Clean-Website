@@ -8,6 +8,9 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Brand water tones (blue-green), matching the business card.
+        teal: { 400: "#22B3C1", 500: "#0E9AA7", 600: "#0A7E92" },
+        cyan: { 50: "#E8F7FA", 500: "#0B8BA3", 600: "#0A5F78" },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

@@ -1,4 +1,5 @@
-import { Sun, Phone } from "lucide-react";
+import { Phone } from "lucide-react";
+import LogoMark from "@/react-app/components/LogoMark";
 import { BUSINESS } from "@/react-app/lib/business";
 
 export default function Footer() {
@@ -6,9 +7,7 @@ export default function Footer() {
     <footer className="bg-foreground pt-12 pb-28 lg:pb-12 text-center">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-teal-500 flex items-center justify-center">
-            <Sun className="w-5 h-5 text-white" />
-          </div>
+          <LogoMark className="w-10 h-10" />
           <span className="text-xl font-bold text-white">Florida SunRinse</span>
         </div>
         <a href={BUSINESS.phoneHref} className="mb-3 inline-flex items-center gap-2 text-lg font-bold text-white hover:text-primary">

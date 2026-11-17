@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
-import { Menu, X, Sun, Phone, MessageSquare } from "lucide-react";
+import { Menu, X, Phone, MessageSquare } from "lucide-react";
+import LogoMark from "@/react-app/components/LogoMark";
 import { BUSINESS } from "@/react-app/lib/business";
 import { Button } from "@/react-app/components/ui/button";
 
@@ -48,10 +49,7 @@ export default function Navbar() {
               onClick={() => handleNavClick("/")}
               className="flex items-center gap-2 sm:gap-3 group min-w-0"
             >
-              <div className="relative w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-primary to-teal-600 flex items-center justify-center shadow-lg flex-shrink-0">
-                <Sun className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
-                <div className="absolute -top-0.5 -right-0.5 w-3 h-3 sm:w-4 sm:h-4 bg-secondary rounded-full border-2 border-white" />
-              </div>
+              <LogoMark className="w-9 h-9 sm:w-12 sm:h-12 flex-shrink-0 drop-shadow" />
               <div className="flex flex-col text-left min-w-0">
                 <span className="text-base sm:text-xl font-black tracking-tight text-foreground whitespace-nowrap">
                   Florida SunRinse
