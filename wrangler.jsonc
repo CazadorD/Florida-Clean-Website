@@ -1,0 +1,14 @@
+{
+  "name": "florida-sunrinse",
+  "main": "src/worker/index.ts",
+  "compatibility_date": "2025-09-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "send_email": [
+    { "name": "QUOTE_EMAIL", "destination_address": "mservicioselites@gmail.com" }
+  ],
+  "observability": { "enabled": true }
+}

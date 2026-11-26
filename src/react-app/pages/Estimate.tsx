@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, type FormEvent } from "react";
-import { useForm } from "@formspree/react";
 import { Link, useSearchParams } from "react-router";
 import {
   ArrowRight, Phone, Palmtree, Shield, Clock,
@@ -40,7 +39,6 @@ const PROPERTY_TYPES = ["Single Family Home", "Townhome / Condo", "Multi-Family 
 const SQUARE_FOOTAGES = ["Under 1,500 sq ft", "1,500–2,500 sq ft", "2,500–4,000 sq ft", "4,000–6,000 sq ft", "6,000+ sq ft"];
 const URGENCIES = ["ASAP (within a week)", "Within 2–4 weeks", "Next month or so", "Just exploring options"];
 
-const FORMSPREE_ID = "mgobbkpo";
 
 // InputField outside component — fixes the focus-loss bug
 function InputField({
@@ -153,19 +151,12 @@ export default function EstimatePage() {
     address: "", city: "", zipCode: "", services: SERVICES.some(s => s.id === params.get("service")) ? [params.get("service")!] : [],
     propertyType: "", squareFootage: "", urgency: "", message: "",
   });
-  const [state, formspreeSubmit, reset] = useForm(FORMSPREE_ID);
+  const [submitting, setSubmitting] = useState(false);
+  const [serverErrors, setServerErrors] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
-
-  useEffect(() => {
-    if (state.succeeded) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      setSubmitted(true);
-    }
-  }, [state.succeeded]);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
-  const serverErrors = state.errors ? [...state.errors.getFormErrors().map(e => e.message), ...state.errors.getAllFieldErrors().flatMap(([field, items]) => items.map(e => `${field}: ${e.message}`))] : [];
-  useEffect(() => { if (Object.keys(errors).length || networkError || state.errors) errorSummary.current?.focus(); }, [errors, networkError, state.errors]);
+  useEffect(() => { if (Object.keys(errors).length || networkError || serverErrors.length) errorSummary.current?.focus(); }, [errors, networkError, serverErrors]);
 
   const handleChange = (field: keyof FormData, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -202,12 +193,13 @@ export default function EstimatePage() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (sending.current) return;
-    setNetworkError(""); reset();
+    setNetworkError(""); setServerErrors([]);
     if (!validate()) return;
     const gotcha = String(new FormData(event.currentTarget).get("_gotcha") ?? "");
     sending.current = true;
+    setSubmitting(true);
     try {
-      await formspreeSubmit({
+      const res = await fetch("/api/quote", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({
         name: [form.firstName.trim(), form.lastName.trim()].filter(Boolean).join(" "),
         ...(form.email.trim() ? { email: form.email.trim() } : {}),
         phone: form.phone.trim(), city: form.city.trim(), address: form.address.trim(),
@@ -215,12 +207,13 @@ export default function EstimatePage() {
         services: SERVICES.filter(s => form.services.includes(s.id)).map(s => s.label).join(", "),
         propertyType: form.propertyType, squareFootage: form.squareFootage, urgency: form.urgency,
         message: form.message.trim(), _gotcha: gotcha,
-        _subject: `Florida SunRinse estimate — ${form.firstName.trim()} — ${form.city.trim()}`,
-      });
+              }) });
+      const data = await res.json().catch(() => ({})) as { ok?: boolean; error?: string };
+      if (res.ok && data.ok) { window.scrollTo({ top: 0, behavior: "smooth" }); setSubmitted(true); }
+      else setServerErrors([data.error || "We couldn't send your request. Please try again or call us."]);
     } catch {
-      reset();
       setNetworkError("We couldn't confirm delivery. Your details are still here. Check your connection before trying again.");
-    } finally { sending.current = false; }
+    } finally { sending.current = false; setSubmitting(false); }
   };
 
   // Show success screen inline — no routing, stays on same page
@@ -270,16 +263,16 @@ export default function EstimatePage() {
           <div className="grid lg:grid-cols-3 gap-10 items-start">
 
             {/* FORM */}
-            <form onSubmit={handleSubmit} noValidate aria-label="Request a cleaning quote" aria-busy={state.submitting} className="lg:col-span-2 bg-white rounded-3xl shadow-xl border border-border p-5 sm:p-8 animate-on-scroll">
+            <form onSubmit={handleSubmit} noValidate aria-label="Request a cleaning quote" aria-busy={submitting} className="lg:col-span-2 bg-white rounded-3xl shadow-xl border border-border p-5 sm:p-8 animate-on-scroll">
               <h2 className="text-2xl font-black text-foreground mb-3">Tell Us About Your Property</h2>
               <p className="text-sm text-muted-foreground mb-8">* Required fields</p>
 
-              {(Object.keys(errors).length > 0 || networkError || state.errors) && <div ref={errorSummary} tabIndex={-1} role="alert" className="mb-6 rounded-xl border border-red-300 bg-red-50 p-4 text-red-800">
+              {(Object.keys(errors).length > 0 || networkError || serverErrors.length > 0) && <div ref={errorSummary} tabIndex={-1} role="alert" className="mb-6 rounded-xl border border-red-300 bg-red-50 p-4 text-red-800">
                 <p className="font-bold">Your request has not been confirmed.</p>
                 <ul>{Object.entries(errors).map(([key,message]) => <li key={key}>{message}</li>)}{serverErrors.map((message,i) => <li key={i}>{message}</li>)}</ul>
                 {networkError && <p>{networkError}</p>}
               </div>}
-              <fieldset disabled={state.submitting}>
+              <fieldset disabled={submitting}>
               <legend className="sr-only">Contact and project details</legend>
               <div hidden><input name="_gotcha" tabIndex={-1} autoComplete="off" aria-label="Leave this empty" /></div>
               {/* Step 1 */}
@@ -444,11 +437,11 @@ export default function EstimatePage() {
 
               <Button
                 type="submit"
-                disabled={state.submitting}
+                disabled={submitting}
                 size="lg"
                 className="w-full bg-gradient-to-r from-secondary to-orange-500 hover:from-secondary/90 hover:to-orange-500/90 text-white font-bold text-lg py-6 rounded-2xl shadow-xl shadow-secondary/30 btn-pulse disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                {state.submitting ? (
+                {submitting ? (
                   <span className="flex items-center justify-center gap-2">
                     <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24" fill="none">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />

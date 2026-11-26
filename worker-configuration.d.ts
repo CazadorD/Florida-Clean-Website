@@ -1,3 +1,4 @@
 interface Env {
-  [key: string]: unknown;
+  QUOTE_EMAIL: SendEmail;
+  ASSETS: Fetcher;
 }

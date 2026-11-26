@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 
-const endpoint = 'https://formspree.io/f/mgobbkpo';
+const endpoint = '**/api/quote';
 // Never send real leads or other external requests from this test suite.
 test.beforeEach(async ({ context }) => {
   await context.route('**/*', route => {
@@ -49,7 +49,7 @@ test('Enter sends every required detail and optional message once, waits for acc
     requests++;
     body = route.request().postDataJSON();
     await gate;
-    await route.fulfill({ status: 200, json: { ok: true, next: '/thanks' } });
+    await route.fulfill({ status: 200, json: { ok: true } });
   });
   await page.goto('/estimate?service=fence');
   await expect(page.getByLabel('Fence Cleaning', { exact: true })).toBeChecked();
@@ -71,7 +71,7 @@ test('optional email can be omitted and confirmation uses the required phone', a
   let body: Record<string, string> = {};
   await page.route(endpoint, route => {
     body = route.request().postDataJSON();
-    return route.fulfill({ status: 200, json: { ok: true, next: '/thanks' } });
+    return route.fulfill({ status: 200, json: { ok: true } });
   });
   await page.goto('/estimate');
   await fillRequired(page);
@@ -89,8 +89,8 @@ test('server field rejection keeps data and allows successful retry', async ({ p
   await page.route(endpoint, route => {
     attempts++;
     return attempts === 1
-      ? route.fulfill({ status: 422, json: { errors: [{ field: 'email', code: 'TYPE_EMAIL', message: 'Email rejected for test' }] } })
-      : route.fulfill({ status: 200, json: { ok: true, next: '/thanks' } });
+      ? route.fulfill({ status: 422, json: { ok: false, error: 'Email rejected for test' } })
+      : route.fulfill({ status: 200, json: { ok: true } });
   });
   await page.goto('/estimate');
   await fillRequired(page);
@@ -114,7 +114,7 @@ test('network failure does not claim success or erase data', async ({ page }) =>
 });
 
 test('rate limit is reported without a false confirmation', async ({ page }) => {
-  await page.route(endpoint, route => route.fulfill({ status: 429, json: { errors: [{ code: 'RATE_LIMIT', message: 'Too many requests. Try again later.' }] } }));
+  await page.route(endpoint, route => route.fulfill({ status: 429, json: { ok: false, error: 'Too many requests. Try again later.' } }));
   await page.goto('/estimate');
   await fillRequired(page);
   await page.getByRole('button', { name: 'Send My Free Estimate Request' }).click();
@@ -123,7 +123,7 @@ test('rate limit is reported without a false confirmation', async ({ page }) => 
 });
 
 test('phone and ZIP reject blank or invalid values; ZIP+4 and empty message are accepted', async ({ page }) => {
-  await page.route(endpoint, route => route.fulfill({ status: 200, json: { ok: true, next: '/thanks' } }));
+  await page.route(endpoint, route => route.fulfill({ status: 200, json: { ok: true } }));
   await page.goto('/estimate');
   await fillRequired(page);
   await page.getByLabel('Phone Number', { exact: false }).fill('123');
