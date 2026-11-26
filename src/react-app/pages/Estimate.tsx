@@ -156,11 +156,15 @@ export default function EstimatePage() {
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
-  useEffect(() => { if (Object.keys(errors).length || networkError || serverErrors.length) errorSummary.current?.focus(); }, [errors, networkError, serverErrors]);
+  // Move focus to the error summary only after a submit attempt, never while the visitor is typing.
+  const [submitAttempt, setSubmitAttempt] = useState(0);
+  const hasErrors = Object.values(errors).some(Boolean) || !!networkError || serverErrors.length > 0;
+  useEffect(() => { if (submitAttempt && hasErrors) errorSummary.current?.focus(); }, [submitAttempt]); // eslint-disable-line react-hooks/exhaustive-deps
+  const clearError = (field: keyof FormData) => setErrors((e) => { const next = { ...e }; delete next[field]; return next; });
 
   const handleChange = (field: keyof FormData, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
-    if (errors[field]) setErrors((e) => ({ ...e, [field]: undefined }));
+    if (errors[field]) clearError(field);
   };
 
   const toggleService = (id: string) => {
@@ -170,7 +174,7 @@ export default function EstimatePage() {
         ? prev.services.filter((s) => s !== id)
         : [...prev.services, id],
     }));
-    if (errors.services) setErrors((e) => ({ ...e, services: undefined }));
+    if (errors.services) clearError("services");
   };
 
   const validate = () => {
@@ -194,7 +198,7 @@ export default function EstimatePage() {
     event.preventDefault();
     if (sending.current) return;
     setNetworkError(""); setServerErrors([]);
-    if (!validate()) return;
+    if (!validate()) { setSubmitAttempt((n) => n + 1); return; }
     const gotcha = String(new FormData(event.currentTarget).get("_gotcha") ?? "");
     sending.current = true;
     setSubmitting(true);
@@ -207,13 +211,13 @@ export default function EstimatePage() {
         services: SERVICES.filter(s => form.services.includes(s.id)).map(s => s.label).join(", "),
         propertyType: form.propertyType, squareFootage: form.squareFootage, urgency: form.urgency,
         message: form.message.trim(), _gotcha: gotcha,
-              }) });
+      }) });
       const data = await res.json().catch(() => ({})) as { ok?: boolean; error?: string };
       if (res.ok && data.ok) { window.scrollTo({ top: 0, behavior: "smooth" }); setSubmitted(true); }
       else setServerErrors([data.error || "We couldn't send your request. Please try again or call us."]);
     } catch {
       setNetworkError("We couldn't confirm delivery. Your details are still here. Check your connection before trying again.");
-    } finally { sending.current = false; setSubmitting(false); }
+    } finally { sending.current = false; setSubmitting(false); setSubmitAttempt((n) => n + 1); }
   };
 
   // Show success screen inline — no routing, stays on same page
@@ -267,9 +271,9 @@ export default function EstimatePage() {
               <h2 className="text-2xl font-black text-foreground mb-3">Tell Us About Your Property</h2>
               <p className="text-sm text-muted-foreground mb-8">* Required fields</p>
 
-              {(Object.keys(errors).length > 0 || networkError || serverErrors.length > 0) && <div ref={errorSummary} tabIndex={-1} role="alert" className="mb-6 rounded-xl border border-red-300 bg-red-50 p-4 text-red-800">
+              {hasErrors && <div ref={errorSummary} tabIndex={-1} role="alert" className="mb-6 rounded-xl border border-red-300 bg-red-50 p-4 text-red-800">
                 <p className="font-bold">Your request has not been confirmed.</p>
-                <ul>{Object.entries(errors).map(([key,message]) => <li key={key}>{message}</li>)}{serverErrors.map((message,i) => <li key={i}>{message}</li>)}</ul>
+                <ul>{Object.entries(errors).filter(([, message]) => message).map(([key,message]) => <li key={key}>{message}</li>)}{serverErrors.map((message,i) => <li key={i}>{message}</li>)}</ul>
                 {networkError && <p>{networkError}</p>}
               </div>}
               <fieldset disabled={submitting}>
@@ -367,7 +371,7 @@ export default function EstimatePage() {
                     <div className="space-y-2">
                       {PROPERTY_TYPES.map((type) => (
                         <button key={type} type="button"
-                          onClick={() => { setForm((p) => ({ ...p, propertyType: type })); setErrors((e) => ({ ...e, propertyType: undefined })); }}
+                          onClick={() => { setForm((p) => ({ ...p, propertyType: type })); clearError("propertyType"); }}
                           className={`w-full text-left px-4 py-3 rounded-xl border-2 text-sm font-medium transition-all ${
                             form.propertyType === type ? "border-primary bg-primary/5 text-primary" : "border-border text-foreground hover:border-primary/40"
                           }`}
@@ -398,7 +402,7 @@ export default function EstimatePage() {
                       <div className="space-y-2">
                         {URGENCIES.map((urgency) => (
                           <button key={urgency} type="button"
-                            onClick={() => { setForm((p) => ({ ...p, urgency })); setErrors((e) => ({ ...e, urgency: undefined })); }}
+                            onClick={() => { setForm((p) => ({ ...p, urgency })); clearError("urgency"); }}
                             className={`w-full text-left px-4 py-3 rounded-xl border-2 text-sm font-medium transition-all ${
                               form.urgency === urgency ? "border-accent bg-accent/5 text-accent" : "border-border text-foreground hover:border-accent/40"
                             }`}
