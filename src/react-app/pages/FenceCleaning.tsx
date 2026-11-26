@@ -17,11 +17,11 @@ import Footer from "@/react-app/components/Footer";
 import { useScrollAnimation } from "@/react-app/lib/useScrollAnimation";
 
 export default function FenceCleaningPage() {
-  const benefits = ["Fence cleaning", "Material and condition reviewed first", "Approach selected for the surface and finish", "Access and height confirmed before booking", "Existing paint damage discussed before work", "Scope and price agreed before cleaning"];
+  const benefits = ["Fence cleaning, one or both sides", "Removes mildew, algae, and dirt", "Gentle method safe for your fence", "Brings back its original color", "Up-front price, no hidden fees", "Serving Tampa, Riverview, and Brandon"];
 
-  const surfaces = [{name: "Vinyl Fences", desc: "Surface condition reviewed before cleaning"}, {name: "Wood Fences", desc: "Existing finish and wood condition checked first"}, {name: "One or Both Sides", desc: "Scope and access agreed before work begins"}];
+  const surfaces = [{name: "Vinyl Fences", desc: "Removes green algae and dirt"}, {name: "Wood Fences", desc: "Lifts graying and mildew from the wood"}, {name: "One or Both Sides", desc: "Clean just your side, or the whole fence"}];
 
-  const whySoftWash = [{icon: Shield, title: "Surface Assessment", desc: "We check the fence material and condition before selecting a cleaning approach."}, {icon: Zap, title: "Agreed Scope", desc: "We discuss access, height, and the areas included before booking."}, {icon: Sparkles, title: "Finish Awareness", desc: "Existing paint damage and delicate finishes are considered before work begins."}];
+  const whySoftWash = [{icon: Shield, title: "Safe for Your Fence", desc: "Low-pressure soft washing cleans deep without damaging the surface."}, {icon: Zap, title: "Longer-Lasting Clean", desc: "Soft washing treats mildew and algae at the root, so it stays clean longer."}, {icon: Sparkles, title: "No Surprises", desc: "You get a clear price up front, before we start."}];
 
   useScrollAnimation();
 
@@ -79,13 +79,13 @@ export default function FenceCleaningPage() {
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                   <Shield className="w-5 h-5 text-primary" />
                 </div>
-                <span className="text-sm font-medium text-foreground">Fence Assessment</span>
+                <span className="text-sm font-medium text-foreground">Free Quotes</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
                   <Sparkles className="w-5 h-5 text-secondary" />
                 </div>
-                <span className="text-sm font-medium text-foreground">Surface-Suited Method</span>
+                <span className="text-sm font-medium text-foreground">Gentle Soft Wash</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
@@ -186,8 +186,8 @@ export default function FenceCleaningPage() {
 
               <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4">
                 {[
-                  { value: "Reviewed", label: "Surface Condition Before Work", color: "from-accent to-pink-500" },
-                  { value: "Agreed", label: "Scope & Price Before Cleaning", color: "from-primary to-teal-500" },
+                  { value: "Soft", label: "Wash Safe for Your Fence", color: "from-accent to-pink-500" },
+                  { value: "Free", label: "No-Obligation Quotes", color: "from-primary to-teal-500" },
                 ].map((stat) => (
                   <div key={stat.label} className="bg-white rounded-2xl p-3 sm:p-5 shadow border border-border">
                     <div className={`text-xl sm:text-2xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-1`}>

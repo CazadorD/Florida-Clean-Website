@@ -109,7 +109,7 @@ function SuccessScreen({ firstName, email, phone }: { firstName: string; email: 
             <h2 className="font-black text-foreground text-lg mb-4 text-center">What Happens Next</h2>
             <div className="space-y-4">
               {[
-                { step: "1", title: "We review your request", desc: "Our team looks over your property details and services needed.", color: "from-primary to-teal-500" },
+                { step: "1", title: "We review your request", desc: "We look over your property details and the services you need.", color: "from-primary to-teal-500" },
                 { step: "2", title: "We follow up", desc: "We may ask for photos, measurements, or a property visit before providing a quote.", color: "from-secondary to-orange-500" },
                 { step: "3", title: "We show up and get it done", desc: "Once you approve the quote, we schedule a time that works for you. No surprises.", color: "from-accent to-pink-500" },
               ].map((item) => (
@@ -478,10 +478,10 @@ export default function EstimatePage() {
                 <h3 className="font-black text-foreground text-lg mb-5">Why Choose Florida SunRinse?</h3>
                 <div className="space-y-4">
                   {[
-                    { icon: Clock, label: "Plan Your Project", desc: "Availability confirmed before booking", color: "text-primary", bg: "bg-primary/10" },
-                    { icon: Shield, label: "Surface Assessment", desc: "Material and condition reviewed first", color: "text-secondary", bg: "bg-secondary/10" },
+                    { icon: Clock, label: "Local Service", desc: "Serving Tampa, Riverview, and Brandon", color: "text-primary", bg: "bg-primary/10" },
+                    { icon: Shield, label: "Right Method", desc: "Safe cleaning for every surface", color: "text-secondary", bg: "bg-secondary/10" },
                     { icon: CheckCircle2, label: "No Hidden Fees", desc: "Transparent pricing, no surprises", color: "text-accent", bg: "bg-accent/10" },
-                    { icon: Sparkles, label: "Your Project", desc: "Cleaning matched to the agreed scope", color: "text-yellow-500", bg: "bg-yellow-50" },
+                    { icon: Sparkles, label: "Fast Response", desc: "We get back to you quickly with your quote", color: "text-yellow-500", bg: "bg-yellow-50" },
                   ].map((item) => (
                     <div key={item.label} className="flex items-start gap-3">
                       <div className={`w-9 h-9 rounded-xl ${item.bg} flex items-center justify-center flex-shrink-0`}>

@@ -20,11 +20,11 @@ import Footer from "@/react-app/components/Footer";
 import { useScrollAnimation } from "@/react-app/lib/useScrollAnimation";
 
 export default function DrivewayPage() {
-  const benefits = ["Cleaning for dirt and organic buildup", "Concrete driveways and walking paths", "Surface condition assessed before work", "Existing cracks and damage discussed", "Scope and price agreed before cleaning", "Oil, rust, and old stains may not come out completely"];
+  const benefits = ["Removes dirt, mold, and dark buildup", "Driveways, sidewalks, and walkways", "Boosts curb appeal instantly", "Right pressure for your concrete", "Up-front price, no hidden fees", "Tough oil and rust stains treated"];
 
-  const surfaces = [{ name: "Concrete Driveways", desc: "Surface condition reviewed before cleaning" }, { name: "Sidewalks", desc: "Cleaning for the paths beside your property" }, { name: "Walkways", desc: "A fresh look for the path to your front door" }];
+  const surfaces = [{ name: "Concrete Driveways", desc: "Bright, clean concrete that boosts curb appeal" }, { name: "Sidewalks", desc: "Safer, less slippery paths around your home" }, { name: "Walkways", desc: "A fresh look for the path to your front door" }];
 
-  const process = [{step: "01", title: "Share Your Project", desc: "Tell us your location and what needs cleaning."}, {step: "02", title: "Surface Assessment", desc: "We review the material, condition, access, and drainage."}, {step: "03", title: "Agree on Scope", desc: "We discuss price, scheduling, and expected results."}, {step: "04", title: "Cleaning & Review", desc: "We clean the agreed surfaces and review the results."}];
+  const process = [{step: "01", title: "Share Your Project", desc: "Tell us what needs cleaning in Tampa, Riverview, or Brandon."}, {step: "02", title: "Free Quote", desc: "We send you a clear price, with no hidden fees."}, {step: "03", title: "Pick Your Day", desc: "We schedule a time that works for you."}, {step: "04", title: "Cleaning & Review", desc: "We clean, then walk the results with you."}];
 
   useScrollAnimation();
 
@@ -83,7 +83,7 @@ export default function DrivewayPage() {
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                   <Shield className="w-5 h-5 text-primary" />
                 </div>
-                <span className="text-sm font-medium text-foreground">Surface Assessment</span>
+                <span className="text-sm font-medium text-foreground">Free Quotes</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
@@ -171,10 +171,10 @@ export default function DrivewayPage() {
 
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
               {[
-                { value: "Driveways", label: "Concrete Surface Cleaning", color: "from-secondary to-orange-500" },
-                { value: "Walkways", label: "Paths Around Your Property", color: "from-primary to-teal-500" },
+                { value: "Driveways", label: "Like-New Concrete", color: "from-secondary to-orange-500" },
+                { value: "Walkways", label: "Safer, Cleaner Paths", color: "from-primary to-teal-500" },
                 { value: "Free", label: "No-Obligation Quotes", color: "from-accent to-pink-500" },
-                { value: "Agreed", label: "Scope Before Work Begins", color: "from-violet-500 to-purple-600" },
+                { value: "Local", label: "Tampa · Riverview · Brandon", color: "from-violet-500 to-purple-600" },
               ].map((stat) => (
                 <div key={stat.label} className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg border border-border animate-on-scroll card-lift">
                   <div className={`text-2xl sm:text-3xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-1 sm:mb-2`}>
